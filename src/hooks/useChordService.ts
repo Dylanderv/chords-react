@@ -1,9 +1,11 @@
 import { Service } from "../model/Service";
 import { useState, useEffect } from "react";
 import { getUkuleleChords, getPianoChords, getGuitarChords, getInstrumentList } from "../services/chordFetchService";
+import { InstrumentType } from "../model/InstrumentType";
+import { IPayloadChordInstrumentList } from "../model/IPayloadChordInstrumentList";
 
-const useChordService = (instrument: 'ukulele' | 'piano' | 'guitar' | 'instrumentList') => {
-  const [result, setResult] = useState<Service<any>>({
+const useChordService = (instrument: InstrumentType | 'instrumentList') => {
+  const [result, setResult] = useState<Service<IPayloadChordInstrumentList>>({
     status: 'loading'
   });
   

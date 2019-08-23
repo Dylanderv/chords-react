@@ -8,16 +8,14 @@ interface IProps {
   instrument: InstrumentType|'instrumentList'
 }
 
-const ChordViewer: React.FC<IProps> = (prop) => {
+const MainChordSelector: React.FC<IProps> = (prop) => {
   const service = useChordService(prop.instrument);
   console.log("SERVICE")
   console.log(service)
   let dataToDisplay = [""];
-  let childData = [""];
   if (service.status === "loaded") {
     // Récupérer les données à afficher dans le selector
     dataToDisplay = getDisplayDataFromChordViewerService(service.payload);
-    childData = [];
   }
   console.log(dataToDisplay)
   return (
@@ -33,4 +31,4 @@ const ChordViewer: React.FC<IProps> = (prop) => {
     )
 }
 
-export default ChordViewer;
+export default MainChordSelector;
