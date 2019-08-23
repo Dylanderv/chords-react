@@ -25,7 +25,7 @@ const useChordService = (instrument: 'ukulele' | 'piano' | 'guitar' | 'instrumen
         setResult({ status: 'error', error: new Error('undefined instrument') })
         break;
     }
-  });
+  }, [instrument]);
 
   return result;
 }

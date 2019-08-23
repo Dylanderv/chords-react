@@ -5,7 +5,7 @@ import ChordViewer from './components/chords-viewer/ChordViewer';
 const App: React.FC = () => {
   return (
     <div className="App">
-      <ChordViewer></ChordViewer>
+      <ChordViewer instrument="instrumentList"></ChordViewer>
     </div>
   );
 }
