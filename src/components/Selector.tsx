@@ -1,18 +1,25 @@
 import React from 'react';
 import { Pivot, PivotItem } from 'office-ui-fabric-react/lib/Pivot';
+import { Label, ILabelStyles } from 'office-ui-fabric-react/lib/Label';
+import { IStyleSet } from '@uifabric/styling';
 
 interface IProps {
-  children: string,
   items: string[]
 }
 
-export const Selector = React.memo<IProps>( ({ children,  items }) => {
-  console.log("ITEMS")
-  console.log(items)
+const labelStyles: Partial<IStyleSet<ILabelStyles>> = {
+  root: { marginTop: 10 }
+};
 
-  return (
-    <Pivot>
-      {items.map(item => <PivotItem key={item} headerText={item}>{children}</PivotItem>)}
-    </Pivot>
-  )
-})
+export class Selector extends React.Component<IProps> {  
+
+  render() {
+    console.log(this.props)
+    return (
+      <Pivot>
+      {this.props.items.map(item => <PivotItem headerText={item} key={item}><Label styles={labelStyles}>{item}</Label></PivotItem>)}
+      </Pivot>
+    )
+  
+  }
+}

@@ -4,7 +4,7 @@ import { IUkuleleChords } from "../model/ukulele/IUkuleleChords";
 import { IPianoChords } from "../model/piano/IPianoChords";
 import { InstrumentType } from "../model/InstrumentType";
 
-export function getDisplayDataFromChordViewerService(payload: IPayloadChordInstrumentList) {
+function getDisplayDataFromInstrumentSelector(payload: IPayloadChordInstrumentList) {
   switch (payload.type) {
     case "guitar":
       let guitarData = Object.getOwnPropertyNames((payload.data as IGuitarChords).chords);
@@ -26,3 +26,5 @@ export function getDisplayDataFromChordViewerService(payload: IPayloadChordInstr
       break;
   }
 }
+
+export {getDisplayDataFromInstrumentSelector};
