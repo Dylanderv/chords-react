@@ -1,8 +1,9 @@
 import React from 'react';
 import useChordService from '../../hooks/useChordService';
-import { Selector } from '../Selector';
 import { InstrumentType } from '../../model/InstrumentType';
 import { getDisplayDataFromInstrumentSelector } from '../../utils/chordViewerUtils';
+import { PivotItem, Pivot } from 'office-ui-fabric-react/lib/Pivot';
+import SecondChordSelector from './SecondChordSelector';
 
 interface IProps {
   instrument: InstrumentType|'instrumentList'
@@ -22,7 +23,11 @@ const MainChordSelector: React.FC<IProps> = (prop) => {
       <div>
         {service.status === 'loading' && <div>Loading...</div>}
         {service.status === 'loaded' && (
-          <Selector items={dataToDisplay}></Selector>
+          <Pivot>
+          {dataToDisplay.map(item => <PivotItem headerText={item} key={item}>
+            <SecondChordSelector instrument={prop.instrument} chord={item}></SecondChordSelector>
+          </PivotItem>)}
+        </Pivot>
         )}
         {service.status === 'error' && (
           <div>Error, the backend moved to the dark side.</div>
