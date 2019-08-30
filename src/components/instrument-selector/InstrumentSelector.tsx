@@ -45,7 +45,7 @@ const InstrumentSelector: React.FC = () => {
 const customButton = (props: IButtonProps) => {
   if (props.name === selected) {
     return (
-      <CommandBarButton {...props} styles={{...props.styles, root: {background: "#e1dfdd"}}}/>
+      <CommandBarButton {...props} styles={{...props.styles, root: {background: "#f5f5f5", color: "#1989fa"}}}/>
     );
   } else {
     return (

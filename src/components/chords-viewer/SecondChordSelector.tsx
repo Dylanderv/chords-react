@@ -55,8 +55,6 @@ function SecondChordSelector ({ match }: RouteComponentProps<TParams>) {
         {service.status === 'loading' && <div>Loading...</div>}
         {service.status === 'loaded' && (
           <div>
-            
-            <CommandBarButton styles={{rootChecked: {background: "red"}}}>SALSKSADOHSAI</CommandBarButton>
             <CommandBar buttonAs={customButton} items={dataFirst} overflowItems={dataLast}></CommandBar>
           </div>
           
@@ -73,7 +71,7 @@ function SecondChordSelector ({ match }: RouteComponentProps<TParams>) {
 const customButton = (props: IButtonProps) => {
   if (props.name === selected) {
     return (
-      <CommandBarButton {...props} styles={{...props.styles, root: {background: "#e1dfdd"}}}/>
+      <CommandBarButton {...props} styles={{...props.styles, root: {background: "#f5f5f5", color: "#1989fa"}}}/>
     );
   } else {
     return (
