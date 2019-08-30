@@ -2,16 +2,18 @@ import React from 'react';
 import useChordService from '../../hooks/useChordService';
 import { InstrumentType } from '../../model/InstrumentType';
 import { getDisplayDataFromMainChordSelector } from '../../utils/chordViewerUtils';
-import { INavLinkGroup, ICommandBarItemProps, CommandBar } from 'office-ui-fabric-react'
+import { INavLinkGroup, ICommandBarItemProps, CommandBar, Customizer, ICommandBarStyles, CommandBarButton, IButtonProps } from 'office-ui-fabric-react'
 import { RouteComponentProps } from 'react-router';
 import { CHORD_VIEWER_BASE_ROUTE } from '../../utils/routerUtils';
 import FabricNavReactRouter from '../FabricNavReactRouter';
 import { link } from 'fs';
 import { url } from 'inspector';
 import { useReactRouter } from '../../hooks/useReactRouter';
+import { IComponentStyles } from '@uifabric/foundation';
 
 type TParams = {instrument: InstrumentType|'instrumentList', mainChord: string}
 
+let selected: string;
 
 function SecondChordSelector ({ match }: RouteComponentProps<TParams>) {
   const service = useChordService(match.params.instrument);
@@ -28,7 +30,10 @@ function SecondChordSelector ({ match }: RouteComponentProps<TParams>) {
       key: data,
       name: data,
       // href: CHORD_VIEWER_BASE_ROUTE + "/" + match.params.instrument + '/' + data,
-      onClick: () => {history.push(CHORD_VIEWER_BASE_ROUTE + "/" + match.params.instrument + '/' + match.params.mainChord + '/' + data)}
+      onClick: () => {
+        selected = data;
+        history.push(CHORD_VIEWER_BASE_ROUTE + "/" + match.params.instrument + '/' + match.params.mainChord + '/' + data);
+      }
     }))
 
     let i = 0;
@@ -46,10 +51,13 @@ function SecondChordSelector ({ match }: RouteComponentProps<TParams>) {
   }
   return (
       <div>
+
         {service.status === 'loading' && <div>Loading...</div>}
         {service.status === 'loaded' && (
           <div>
-            <CommandBar items={dataFirst} overflowItems={dataLast}></CommandBar>
+            
+            <CommandBarButton styles={{rootChecked: {background: "red"}}}>SALSKSADOHSAI</CommandBarButton>
+            <CommandBar buttonAs={customButton} items={dataFirst} overflowItems={dataLast}></CommandBar>
           </div>
           
          )}
@@ -59,5 +67,20 @@ function SecondChordSelector ({ match }: RouteComponentProps<TParams>) {
       </div>
     )
 }
+
+// https://github.com/OfficeDev/office-ui-fabric-react/blob/master/packages/office-ui-fabric-react/src/components/CommandBar/examples/CommandBar.ButtonAs.Example.tsx
+
+const customButton = (props: IButtonProps) => {
+  if (props.name === selected) {
+    return (
+      <CommandBarButton {...props} styles={{...props.styles, root: {background: "#e1dfdd"}}}/>
+    );
+  } else {
+    return (
+      <CommandBarButton {...props} styles={{...props.styles}}/>
+    );
+  }
+  
+};
 
 export default SecondChordSelector;

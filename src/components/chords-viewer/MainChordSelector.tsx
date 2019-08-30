@@ -6,15 +6,16 @@ import { PivotItem, Pivot } from 'office-ui-fabric-react/lib/Pivot';
 import { RouteComponentProps } from 'react-router';
 import { CHORD_VIEWER_BASE_ROUTE } from '../../utils/routerUtils';
 import { useReactRouter } from '../../hooks/useReactRouter';
-import { CommandBar, ICommandBarItemProps, Icon } from 'office-ui-fabric-react';
+import { CommandBar, ICommandBarItemProps, Icon, IButtonProps, CommandBarButton } from 'office-ui-fabric-react';
 import { Link } from 'react-router-dom';
 
-type TParams = {instrument: InstrumentType|'instrumentList'}
+type TParams = {instrument: InstrumentType|'instrumentList', mainChord?: string}
+
+let selected: string;
 
 function MainChordSelector ({ match }: RouteComponentProps<TParams>) {
   const service = useChordService(match.params.instrument);
   const { history } = useReactRouter();
-
   let dataToDisplay = [""];
   let items: ICommandBarItemProps[] = [];
   if (service.status === "loaded") {
@@ -24,7 +25,10 @@ function MainChordSelector ({ match }: RouteComponentProps<TParams>) {
       key: data,
       name: data,
       // href: CHORD_VIEWER_BASE_ROUTE + "/" + match.params.instrument + '/' + data,
-      onClick: () => {history.push(CHORD_VIEWER_BASE_ROUTE + "/" + match.params.instrument + '/' + data)}
+      onClick: () => {
+        selected = data;
+        history.push(CHORD_VIEWER_BASE_ROUTE + "/" + match.params.instrument + '/' + data)
+      }
     }))
 
 
@@ -35,7 +39,7 @@ function MainChordSelector ({ match }: RouteComponentProps<TParams>) {
         {service.status === 'loading' && <div>Loading...</div>}
         {service.status === 'loaded' && (
         <div>
-          <CommandBar items={items}></CommandBar>
+          <CommandBar buttonAs={customButton} items={items}></CommandBar>
         </div>
         )}
         {service.status === 'error' && (
@@ -44,5 +48,18 @@ function MainChordSelector ({ match }: RouteComponentProps<TParams>) {
       </div>
     )
 }
+
+const customButton = (props: IButtonProps) => {
+  if (props.name === selected) {
+    return (
+      <CommandBarButton {...props} styles={{...props.styles, root: {background: "#e1dfdd"}}}/>
+    );
+  } else {
+    return (
+      <CommandBarButton {...props} styles={{...props.styles}}/>
+    );
+  }
+  
+};
 
 export default MainChordSelector;

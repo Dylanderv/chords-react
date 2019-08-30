@@ -11,6 +11,7 @@ import ChordSelector from './components/chords-viewer/ChordSelector';
 const App: React.FC = () => {
   return (
     <Router>
+      
       <Link to={CHORD_VIEWER_BASE_ROUTE}>Chord Viewer</Link>
 
       <Route path={CHORD_VIEWER_BASE_ROUTE} component={InstrumentSelector} />

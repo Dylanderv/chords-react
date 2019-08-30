@@ -4,7 +4,9 @@ import { Service } from '../../model/Service';
 import { Link } from 'react-router-dom';
 import { CHORD_VIEWER_BASE_ROUTE } from '../../utils/routerUtils';
 import { useReactRouter } from '../../hooks/useReactRouter';
-import { ICommandBarItemProps, CommandBar } from 'office-ui-fabric-react';
+import { ICommandBarItemProps, CommandBar, CommandBarButton, IButtonProps } from 'office-ui-fabric-react';
+
+let selected: string;
 
 const InstrumentSelector: React.FC = () => {
   const service = useChordService("instrumentList") as Service<{type: 'instrumentList', data: ['ukulele', 'guitar', 'piano']}>;
@@ -17,7 +19,10 @@ const InstrumentSelector: React.FC = () => {
       key: data,
       name: data,
       // href: CHORD_VIEWER_BASE_ROUTE + "/" + match.params.instrument + '/' + data,
-      onClick: () => {history.push(CHORD_VIEWER_BASE_ROUTE + "/" + data)}
+      onClick: () => {
+        selected = data;
+        history.push(CHORD_VIEWER_BASE_ROUTE + "/" + data)
+      }
     }))
 
   }
@@ -27,7 +32,7 @@ const InstrumentSelector: React.FC = () => {
       {service.status === 'loading' && <div>Loading...</div>}
       {service.status === 'loaded' && (
         <div>
-          <CommandBar items={data}></CommandBar>
+          <CommandBar buttonAs={customButton} items={data}></CommandBar>
         </div>
         )}
       {service.status === 'error' && (
@@ -36,5 +41,18 @@ const InstrumentSelector: React.FC = () => {
     </div>
   )
 }
+
+const customButton = (props: IButtonProps) => {
+  if (props.name === selected) {
+    return (
+      <CommandBarButton {...props} styles={{...props.styles, root: {background: "#e1dfdd"}}}/>
+    );
+  } else {
+    return (
+      <CommandBarButton {...props} styles={{...props.styles}}/>
+    );
+  }
+  
+};
 
 export default InstrumentSelector;
