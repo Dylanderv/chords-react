@@ -18,6 +18,8 @@ function SecondChordSelector ({ match }: RouteComponentProps<TParams>) {
   const { history } = useReactRouter();
   let rawData: string[] = [];
   let data: ICommandBarItemProps[] = [];
+  let dataFirst: ICommandBarItemProps[] = [];
+  let dataLast: ICommandBarItemProps[] = [];
   if (service.status === "loaded") {
     // Récupérer les données à afficher dans le selector
     rawData = getDisplayDataFromMainChordSelector(service.payload, match.params.mainChord);
@@ -29,13 +31,25 @@ function SecondChordSelector ({ match }: RouteComponentProps<TParams>) {
       onClick: () => {history.push(CHORD_VIEWER_BASE_ROUTE + "/" + match.params.instrument + '/' + match.params.mainChord + '/' + data)}
     }))
 
+    let i = 0;
+    while(i < data.length && i < 10) {
+      dataFirst.push(data[i])
+      i++;
+    }
+    while (i < data.length) {
+      dataLast.push(data[i])
+      i++;
+    }
+
+    console.log('done');
+
   }
   return (
       <div>
         {service.status === 'loading' && <div>Loading...</div>}
         {service.status === 'loaded' && (
           <div>
-            <CommandBar items={data}></CommandBar>
+            <CommandBar items={dataFirst} overflowItems={dataLast}></CommandBar>
           </div>
           
          )}
