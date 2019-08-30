@@ -20,7 +20,6 @@ export function getPianoChords(): {type: 'piano', data: IPianoChords} {
 }
 
 export function getUkuleleChords(): {type: 'ukulele', data: IUkuleleChords} {
-  console.log(ukuleleChord.chords)
   return {
     type: 'ukulele',
     data: ukuleleChord

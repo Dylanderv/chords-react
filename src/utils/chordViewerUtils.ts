@@ -30,8 +30,6 @@ export function getDisplayDataFromMainChordSelector(payload: IPayloadChordInstru
       (payload.data as IGuitarChords).chords[mainChord as mainChordGuitar].forEach(elem => guitarData.push(mainChord + elem.suffix))
       return guitarData;
     case "ukulele":
-      console.log('PAYLOADsfa')
-      console.log(payload.data as IUkuleleChords)
       let ukuleleData: string[] = [];
       (payload.data as IUkuleleChords).chords[mainChord as mainChordUkulele].forEach(elem => ukuleleData.push(mainChord + elem.suffix))
       return ukuleleData

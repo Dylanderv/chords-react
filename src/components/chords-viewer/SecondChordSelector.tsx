@@ -2,40 +2,44 @@ import React from 'react';
 import useChordService from '../../hooks/useChordService';
 import { InstrumentType } from '../../model/InstrumentType';
 import { getDisplayDataFromMainChordSelector } from '../../utils/chordViewerUtils';
-import { Pivot, PivotItem } from 'office-ui-fabric-react/lib/Pivot';
-import { Dropdown, DropdownMenuItemType, IDropdownStyles, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
+import { INavLinkGroup } from 'office-ui-fabric-react'
+import { RouteComponentProps } from 'react-router';
+import { CHORD_VIEWER_BASE_ROUTE } from '../../utils/routerUtils';
+import FabricNavReactRouter from '../FabricNavReactRouter';
+import { link } from 'fs';
+import { url } from 'inspector';
 
-interface IProps {
-  instrument: InstrumentType|'instrumentList',
-  chord: string
-}
+type TParams = {instrument: InstrumentType|'instrumentList', mainChord: string}
 
-const SecondChordSelector: React.FC<IProps> = (prop) => {
-  const service = useChordService(prop.instrument);
-  console.log("SERVICE")
-  console.log(service)
-  let rawDataToDisplay = [""];
-  const dataToDisplay: IDropdownOption[] = [];
+
+function SecondChordSelector ({ match }: RouteComponentProps<TParams>) {
+  const service = useChordService(match.params.instrument);
+  let rawData: string[] = [];
+  let data: INavLinkGroup[] = [];
   if (service.status === "loaded") {
     // Récupérer les données à afficher dans le selector
-    rawDataToDisplay = getDisplayDataFromMainChordSelector(service.payload, prop.chord);
+    rawData = getDisplayDataFromMainChordSelector(service.payload, match.params.mainChord);
 
-    rawDataToDisplay.forEach(elem => dataToDisplay.push({key: elem, text: elem}))
+    data = [{
+      name: 'chord',
+      links: rawData.map(elem => ({
+        key: elem,
+        name: elem,
+        url: CHORD_VIEWER_BASE_ROUTE + '/' + match.params.instrument + '/' + match.params.mainChord + '/' + elem
+      }))
+    }]
+
+    
+
   }
   return (
       <div>
         {service.status === 'loading' && <div>Loading...</div>}
         {service.status === 'loaded' && (
-        //   <Pivot>
-        //   {dataToDisplay.map(item => 
-        //     <div>
-        //       <PivotItem headerText={item} key={item}>
-        //         {item}
-        //       </PivotItem>
-        //     </div>
-        //   )}
-        // </Pivot>
-          <Dropdown options={dataToDisplay}></Dropdown>
+          <div>
+            <FabricNavReactRouter groups={data}></FabricNavReactRouter>
+          </div>
+          
          )}
         {service.status === 'error' && (
           <div>Error, the backend moved to the dark side.</div>

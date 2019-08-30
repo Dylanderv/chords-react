@@ -3,31 +3,40 @@ import useChordService from '../../hooks/useChordService';
 import { InstrumentType } from '../../model/InstrumentType';
 import { getDisplayDataFromInstrumentSelector } from '../../utils/chordViewerUtils';
 import { PivotItem, Pivot } from 'office-ui-fabric-react/lib/Pivot';
-import SecondChordSelector from './SecondChordSelector';
+import { RouteComponentProps } from 'react-router';
+import { CHORD_VIEWER_BASE_ROUTE } from '../../utils/routerUtils';
+import { useReactRouter } from '../../hooks/useReactRouter';
+import { CommandBar, ICommandBarItemProps, Icon } from 'office-ui-fabric-react';
+import { Link } from 'react-router-dom';
 
-interface IProps {
-  instrument: InstrumentType|'instrumentList'
-}
+type TParams = {instrument: InstrumentType|'instrumentList'}
 
-const MainChordSelector: React.FC<IProps> = (prop) => {
-  const service = useChordService(prop.instrument);
-  console.log("SERVICE")
-  console.log(service)
+function MainChordSelector ({ match }: RouteComponentProps<TParams>) {
+  const service = useChordService(match.params.instrument);
+  const { history } = useReactRouter();
+
   let dataToDisplay = [""];
+  let items: ICommandBarItemProps[] = [];
   if (service.status === "loaded") {
     // Récupérer les données à afficher dans le selector
     dataToDisplay = getDisplayDataFromInstrumentSelector(service.payload);
+    items = dataToDisplay.map(data => ({
+      key: data,
+      name: data,
+      // href: CHORD_VIEWER_BASE_ROUTE + "/" + match.params.instrument + '/' + data,
+      onClick: () => {history.push(CHORD_VIEWER_BASE_ROUTE + "/" + match.params.instrument + '/' + data)}
+    }))
+
+
   }
-  console.log(dataToDisplay)
+
   return (
       <div>
         {service.status === 'loading' && <div>Loading...</div>}
         {service.status === 'loaded' && (
-          <Pivot>
-          {dataToDisplay.map(item => <PivotItem headerText={item} key={item}>
-            <SecondChordSelector instrument={prop.instrument} chord={item}></SecondChordSelector>
-          </PivotItem>)}
-        </Pivot>
+        <div>
+          <CommandBar items={items}></CommandBar>
+        </div>
         )}
         {service.status === 'error' && (
           <div>Error, the backend moved to the dark side.</div>
