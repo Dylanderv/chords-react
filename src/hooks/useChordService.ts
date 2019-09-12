@@ -1,10 +1,10 @@
 import { Service } from "../model/Service";
 import { useState, useEffect } from "react";
-import { getUkuleleChords, getPianoChords, getGuitarChords, getInstrumentList } from "../services/chordFetchService";
+import { getUkuleleChords, getPianoChords, getGuitarChords, getInstrumentList, getPianoChordNames, getGuitarChordNames, getUkuleleChordNames } from "../services/chordFetchService";
 import { InstrumentType } from "../model/InstrumentType";
 import { IPayloadChordInstrumentList } from "../model/IPayloadChordInstrumentList";
 
-const useChordService = (instrument: InstrumentType | 'instrumentList') => {
+const useChordService = (instrument: InstrumentType | 'instrumentList' | 'chordName') => {
   const [result, setResult] = useState<Service<IPayloadChordInstrumentList>>({
     status: 'loading'
   });
@@ -22,6 +22,13 @@ const useChordService = (instrument: InstrumentType | 'instrumentList') => {
         break;
       case 'instrumentList':
         setResult({ status: 'loaded', payload: getInstrumentList() })
+        break;
+      case 'chordName':
+        setResult({ status: 'loaded', payload: {
+            type: 'chordName',
+            data: [getGuitarChordNames(), getUkuleleChordNames(), getPianoChordNames()]
+          }
+        })
         break;
       default:
         setResult({ status: 'error', error: new Error('undefined instrument') })
