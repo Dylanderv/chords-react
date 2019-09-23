@@ -20,7 +20,7 @@ export function getDisplayDataFromInstrumentSelector(payload: IPayloadChordInstr
   }
 }
 
-type mainChordGuitar = "C"|"C#"|"D"|"Eb"|"E"|"F"|"F#"|"G"|"Ab"|"A"|"Bb"|"B";
+type mainChordGuitar = "C"|"Csharp"|"D"|"Eb"|"E"|"F"|"Fsharp"|"G"|"Ab"|"A"|"Bb"|"B";
 type mainChordUkulele = "C"|"Db"|"D"|"Eb"|"E"|"F"|"Gb"|"G"|"Ab"|"A"|"Bb"|"B";
 
 export function getDisplayDataFromMainChordSelector(payload: IPayloadChordInstrumentList, mainChord: any/*mainChordGuitar | mainChordUkulele*/) {
