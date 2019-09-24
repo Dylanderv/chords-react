@@ -41,18 +41,21 @@ const ChordSelector: React.FC<chordSelectorProps> = ({ instrument }) => {
   let mainChordParam = router.match.params.mainChord !== undefined ? router.match.params.mainChord : '';
   let suffixParam = router.match.params.suffix !== undefined ? router.match.params.suffix : '';
 
-  console.log(mainChordParam, suffixParam);
-
+  console.log('init param chord selector', mainChordParam, suffixParam);
+  // Add instrument + check si c'est le meme qu'en paramètre
   const [values, setValues] = React.useState({
     mainChord: mainChordParam,
     suffix: suffixParam,
   });
+
+  console.log('values', values)
 
   const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
     setValues(oldValues => ({
       ...oldValues,
       [event.target.name as string]: event.target.value,
     }));
+    console.log('event target', event.target)
     let pathToGo = [
       CHORD_VIEWER_BASE_ROUTE,
       instrument,
