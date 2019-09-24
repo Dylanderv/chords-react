@@ -1,29 +1,48 @@
 import React from 'react';
 import './App.css';
-import './index.scss';
-import InstrumentSelector from './components/instrument-selector/InstrumentSelector';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-// import MainChordSelector from './components/chords-viewer/MainChordSelector';
-// import SecondChordSelector from './components/chords-viewer/SecondChordSelector';
-// import ChordViewer from './components/chords-viewer/ChordViewer';
 import { CHORD_VIEWER_BASE_ROUTE } from './utils/routerUtils';
+import 'typeface-roboto';
+import InstrumentSelector from './components/selector/InstrumentSelector';
+import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Theme, createStyles } from '@material-ui/core';
 import ChordViewer from './components/chords-viewer/ChordViewer';
-import { Header, HeaderName, SkipToContent } from 'carbon-components-react';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+  }),
+);
 
 const App: React.FC = () => {
+  const classes = useStyles();
   return (
-    <Router>
-      <Header aria-label="Chords-react">
-        <SkipToContent></SkipToContent>
-        <HeaderName href="#" prefix="">
-          Chords-react
-        </HeaderName>
-      </Header>
-      <Link to={CHORD_VIEWER_BASE_ROUTE}>Chord Viewer</Link>
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            {/* <MenuIcon /> */}
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            Chords
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
+      <Router>
+        <Link to={CHORD_VIEWER_BASE_ROUTE}>Chord Viewer</Link>
+        <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument?/:mainChord?/:suffix?"} component={InstrumentSelector}/>
+        {/* <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument/:mainChord/:suffix"} component={ChordViewer} /> */}
+      </Router>
 
-      <Route path={CHORD_VIEWER_BASE_ROUTE} component={InstrumentSelector}/>
-      <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument/:mainChord/:secondChord"} component={ChordViewer} />
-    </Router>
+    </div>
   );
 }
 

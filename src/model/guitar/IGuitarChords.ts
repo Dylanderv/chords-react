@@ -7,7 +7,7 @@ export interface IGuitarChords {
     "name": string,
     "numberOfChords": number
   },
-  tunnings: {
+  tunings: {
     "standard": string[]
   },
   keys: string[],

@@ -1,14 +1,14 @@
 import React from 'react';
 import useChordService from '../../hooks/useChordService';
 import { InstrumentType } from '../../model/InstrumentType';
-import { getDisplayDataFromInstrumentSelector } from '../../utils/chordViewerUtils';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, StaticContext } from 'react-router';
+import { useReactRouter } from '../../hooks/useReactRouter';
 
-type TParams = {instrument: InstrumentType|'instrumentList', mainChord: string, secondChord: string}
+type TParams = {instrument: InstrumentType|'instrumentList', mainChord: string, suffix: string}
 
-function ChordViewer ({ match }: RouteComponentProps<TParams>) {
-  const service = useChordService(match.params.instrument);
-
+const ChordViewer = () => {
+  const router = useReactRouter() as RouteComponentProps<TParams, StaticContext, any>;
+  const service = useChordService(router.match.params.instrument);
   // let dataToDisplay = [""];
   // if (service.status === "loaded") {
   //   // Récupérer les données à afficher dans le selector
@@ -20,9 +20,9 @@ function ChordViewer ({ match }: RouteComponentProps<TParams>) {
         {service.status === 'loading' && <div>Loading...</div>}
         {service.status === 'loaded' && (
         <div>
-          {match.params.instrument}
-          {match.params.mainChord}
-          {match.params.secondChord}
+          {router.match.params.instrument}
+          {router.match.params.mainChord}
+          {router.match.params.suffix}
         </div>
         )}
         {service.status === 'error' && (

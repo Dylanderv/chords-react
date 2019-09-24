@@ -1,0 +1,24 @@
+import React from 'react';
+import { Tab, Tabs } from '@material-ui/core';
+
+type tabListProps = {
+  data: string[]
+}
+
+const TabList: React.FC<tabListProps> = ({data}) => {
+  const [value, setValue] = React.useState(0);
+
+  const handleOnChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
+  }
+
+  return (
+    <div>
+      <Tabs value={value} onChange={handleOnChange}>
+        {(data as string[]).map(elem => <Tab key={elem} label={elem}></Tab>)}
+      </Tabs>
+    </div>
+  )
+}
+
+export default TabList;

@@ -2,11 +2,9 @@ import React from 'react';
 import useChordService from '../../hooks/useChordService';
 import { Service } from '../../model/Service';
 import { useReactRouter } from '../../hooks/useReactRouter';
-import { SideNav, SideNavItems, SideNavMenu, SideNavMenuItem, Accordion, AccordionItem, Header, HeaderName, SkipToContent } from 'carbon-components-react';
 import { IPayloadChordNameItem } from '../../model/IPayloadChordInstrumentList';
 import { CHORD_VIEWER_BASE_ROUTE } from '../../utils/routerUtils';
-import { Link, Route } from "react-router-dom";
-import ChordViewer from '../chords-viewer/ChordViewer';
+import { Link } from "react-router-dom";
 
 
 const InstrumentSelector: React.FC = () => {

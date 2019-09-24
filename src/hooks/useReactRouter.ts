@@ -1,8 +1,8 @@
 import { useContext, useEffect } from 'react';
-import { __RouterContext } from 'react-router';
+import { __RouterContext, RouteComponentProps, StaticContext } from 'react-router';
 import useForceUpdate from 'use-force-update';
 
-export const useReactRouter = () => {
+export function useReactRouter(): RouteComponentProps<{}, StaticContext, any> {
   const forceUpdate = useForceUpdate();
   const routerContext = useContext(__RouterContext);
   useEffect(

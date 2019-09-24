@@ -4,8 +4,14 @@ import { IUkuleleChords } from "./ukulele/IUkuleleChords";
 import { InstrumentType } from "./InstrumentType";
 
 export interface IPayloadChordInstrumentList {
-  type: InstrumentType|'instrumentList'|'chordName';
-  data: ['ukulele', 'guitar', 'piano']|IGuitarChords|IPianoChords|IUkuleleChords|IPayloadChordNameItem[];
+  type: InstrumentType|'instrumentList'|'chordName'|'guitarChordName' | 'ukuleleChordName' | 'pianoChordName';
+  data: ['ukulele', 'guitar', 'piano']|IGuitarChords|IPianoChords|IUkuleleChords|IPayloadChordNameItem[]|DataChordNameItem;
 }
 
-export type IPayloadChordNameItem = {type: InstrumentType, main: string[], suffixes: string[]}
+export interface IPayloadChordName {
+  type: 'guitarChordName' | 'ukuleleChordName' | 'pianoChordName';
+  data: DataChordNameItem;
+}
+
+export type IPayloadChordNameItem = {type: InstrumentType, data: DataChordNameItem}
+type DataChordNameItem = { main: string[], suffixes: string[] }

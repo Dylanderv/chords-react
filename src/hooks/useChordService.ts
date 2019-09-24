@@ -4,7 +4,7 @@ import { getUkuleleChords, getPianoChords, getGuitarChords, getInstrumentList, g
 import { InstrumentType } from "../model/InstrumentType";
 import { IPayloadChordInstrumentList } from "../model/IPayloadChordInstrumentList";
 
-const useChordService = (instrument: InstrumentType | 'instrumentList' | 'chordName') => {
+const useChordService = (instrument: InstrumentType | 'instrumentList' | 'chordName'| 'guitarChordName' | 'ukuleleChordName' | 'pianoChordName') => {
   const [result, setResult] = useState<Service<IPayloadChordInstrumentList>>({
     status: 'loading'
   });
@@ -29,6 +29,15 @@ const useChordService = (instrument: InstrumentType | 'instrumentList' | 'chordN
             data: [getGuitarChordNames(), getUkuleleChordNames(), getPianoChordNames()]
           }
         })
+        break;
+      case 'guitarChordName':
+        setResult({ status: 'loaded', payload: getGuitarChordNames()})
+        break;
+      case 'ukuleleChordName':
+        setResult({ status: 'loaded', payload: getUkuleleChordNames()})
+        break;
+      case 'pianoChordName':
+        setResult({ status: 'loaded', payload: getPianoChordNames()})
         break;
       default:
         setResult({ status: 'error', error: new Error('undefined instrument') })

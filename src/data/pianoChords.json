@@ -1,1 +1,1189 @@
-{"pianoChords":[{"type":"C","chords":[{"name":"C","keys":[{"name":"C"},{"name":"E"},{"name":"G"}]},{"name":"Cm","keys":[{"name":"C"},{"name":"E♭"},{"name":"G"}]},{"name":"C 7","keys":[{"name":"C"},{"name":"E"},{"name":"G"},{"name":"B♭"}]},{"name":"Cm 7","keys":[{"name":"C"},{"name":"E♭"},{"name":"G"},{"name":"B♭"}]},{"name":"Csharp","keys":[{"name":"Csharp"},{"name":"F"},{"name":"Gsharp"}]},{"name":"Csharpm","keys":[{"name":"Csharp"},{"name":"E"},{"name":"Gsharp"}]},{"name":"Csharp 7","keys":[{"name":"Csharp"},{"name":"F"},{"name":"Gsharp"},{"name":"B"}]},{"name":"Csharp 7m","keys":[{"name":"Csharp"},{"name":"E"},{"name":"Gsharp"},{"name":"B"}]}]},{"type":"D","chords":[{"name":"D♭","keys":[{"name":"D♭"},{"name":"B"},{"name":"A♭"}]},{"name":"D♭m","keys":[{"name":"D♭"},{"name":"E"},{"name":"A♭"}]},{"name":"D♭ 7","keys":[{"name":"D♭"},{"name":"B"},{"name":"A♭"},{"name":"B"}]},{"name":"D♭ 7m","keys":[{"name":"D♭"},{"name":"E"},{"name":"A♭"},{"name":"B"}]},{"name":"D","keys":[{"name":"D"},{"name":"Fsharp"},{"name":"A"}]},{"name":"Dm","keys":[{"name":"D"},{"name":"F"},{"name":"A"}]},{"name":"D 7","keys":[{"name":"D"},{"name":"Fsharp"},{"name":"A"},{"name":"C"}]},{"name":"Dm 7","keys":[{"name":"D"},{"name":"F"},{"name":"A"},{"name":"C"}]},{"name":"Dsharp","keys":[{"name":"Dsharp"},{"name":"G"},{"name":"Asharp"}]},{"name":"Dsharpm","keys":[{"name":"Dsharp"},{"name":"Fsharp"},{"name":"Asharp"}]},{"name":"Dsharp 7","keys":[{"name":"Dsharp"},{"name":"G"},{"name":"Asharp"},{"name":"Csharp"}]},{"name":"Dsharpm 7","keys":[{"name":"Dsharp"},{"name":"Fsharp"},{"name":"Asharp"},{"name":"Csharp"}]}]},{"type":"E","chords":[{"name":"E♭","keys":[{"name":"E♭"},{"name":"G"},{"name":"B♭"}]},{"name":"E♭m","keys":[{"name":"E♭"},{"name":"G♭"},{"name":"B♭"}]},{"name":"E♭ 7","keys":[{"name":"E♭"},{"name":"G"},{"name":"B♭"},{"name":"D♭"}]},{"name":"E♭m 7","keys":[{"name":"E♭"},{"name":"G♭"},{"name":"B♭"},{"name":"D♭"}]},{"name":"E","keys":[{"name":"E"},{"name":"Gsharp"},{"name":"B"}]},{"name":"Em","keys":[{"name":"E"},{"name":"G"},{"name":"B"}]},{"name":"E 7","keys":[{"name":"E"},{"name":"Gsharp"},{"name":"B"},{"name":"D"}]},{"name":"Em 7","keys":[{"name":"E"},{"name":"G"},{"name":"B"},{"name":"D"}]}]},{"type":"F","chords":[{"name":"F","keys":[{"name":"F"},{"name":"A"},{"name":"C"}]},{"name":"Fm","keys":[{"name":"F"},{"name":"A♭"},{"name":"C"}]},{"name":"F 7","keys":[{"name":"F"},{"name":"A"},{"name":"C"},{"name":"E♭"}]},{"name":"Fm 7","keys":[{"name":"F"},{"name":"A♭"},{"name":"C"},{"name":"E♭"}]},{"name":"Fsharp","keys":[{"name":"Fsharp"},{"name":"Asharp"},{"name":"Csharp"}]},{"name":"Fsharpm","keys":[{"name":"Fsharp"},{"name":"A"},{"name":"Csharp"}]},{"name":"Fsharp 7","keys":[{"name":"Fsharp"},{"name":"Asharp"},{"name":"Csharp"},{"name":"E"}]},{"name":"Fsharpm 7","keys":[{"name":"Fsharp"},{"name":"A"},{"name":"Csharp"},{"name":"E"}]}]},{"type":"G","chords":[{"name":"G♭","keys":[{"name":"G♭"},{"name":"B♭"},{"name":"D♭"}]},{"name":"G♭m","keys":[{"name":"G♭"},{"name":"A"},{"name":"D♭"}]},{"name":"G♭ 7","keys":[{"name":"G♭"},{"name":"B♭"},{"name":"D♭"},{"name":"E"}]},{"name":"G♭m 7","keys":[{"name":"G♭"},{"name":"A"},{"name":"D♭"},{"name":"E"}]},{"name":"G","keys":[{"name":"G"},{"name":"B"},{"name":"D"}]},{"name":"Gm","keys":[{"name":"G"},{"name":"B♭"},{"name":"D"}]},{"name":"G 7","keys":[{"name":"G"},{"name":"B"},{"name":"D"},{"name":"F"}]},{"name":"Gm 7","keys":[{"name":"G"},{"name":"B♭"},{"name":"D"},{"name":"F"}]},{"name":"Gsharp","keys":[{"name":"Gsharp"},{"name":"C"},{"name":"Dsharp"}]},{"name":"Gsharpm","keys":[{"name":"Gsharp"},{"name":"B"},{"name":"Dsharp"}]},{"name":"Gsharp 7","keys":[{"name":"Gsharp"},{"name":"C"},{"name":"Dsharp"},{"name":"Fsharp"}]},{"name":"Gsharpm 7","keys":[{"name":"Gsharp"},{"name":"B"},{"name":"Dsharp"},{"name":"Fsharp"}]}]},{"type":"A","chords":[{"name":"A♭","keys":[{"name":"A♭"},{"name":"C"},{"name":"E♭"}]},{"name":"A♭m","keys":[{"name":"A♭"},{"name":"B"},{"name":"E♭"}]},{"name":"A♭ 7","keys":[{"name":"A♭"},{"name":"C"},{"name":"E♭"},{"name":"G♭"}]},{"name":"A♭m 7","keys":[{"name":"A♭"},{"name":"B"},{"name":"E♭"},{"name":"G♭"}]},{"name":"A","keys":[{"name":"A"},{"name":"Csharp"},{"name":"E"}]},{"name":"Am","keys":[{"name":"A"},{"name":"C"},{"name":"E"}]},{"name":"A 7","keys":[{"name":"A"},{"name":"Csharp"},{"name":"E"},{"name":"G"}]},{"name":"Am 7","keys":[{"name":"A"},{"name":"C"},{"name":"E"},{"name":"G"}]},{"name":"Asharp","keys":[{"name":"Asharp"},{"name":"D"},{"name":"F"}]},{"name":"Asharpm","keys":[{"name":"Asharp"},{"name":"Csharp"},{"name":"F"}]},{"name":"Asharp 7","keys":[{"name":"Asharp"},{"name":"D"},{"name":"F"},{"name":"Gsharp"}]},{"name":"Asharpm 7","keys":[{"name":"Asharp"},{"name":"Csharp"},{"name":"F"},{"name":"Gsharp"}]}]},{"type":"B","chords":[{"name":"B♭","keys":[{"name":"B♭"},{"name":"D"},{"name":"F"}]},{"name":"B♭m","keys":[{"name":"B♭"},{"name":"D♭"},{"name":"F"}]},{"name":"B♭ 7","keys":[{"name":"B♭"},{"name":"D"},{"name":"F"},{"name":"A♭"}]},{"name":"B♭m 7","keys":[{"name":"B♭"},{"name":"D♭"},{"name":"F"},{"name":"A♭"}]},{"name":"B","keys":[{"name":"B"},{"name":"Dsharp"},{"name":"Fsharp"}]},{"name":"Bm","keys":[{"name":"B"},{"name":"D"},{"name":"Fsharp"}]},{"name":"B 7","keys":[{"name":"B"},{"name":"Dsharp"},{"name":"Fsharp"},{"name":"A"}]},{"name":"Bm 7","keys":[{"name":"B"},{"name":"D"},{"name":"Fsharp"},{"name":"A"}]}]}]}
+{
+  "main": {
+    "name": "piano"
+  },
+  "tunings": {},
+  "keys": [
+    "C",
+    "Csharp",
+    "Db",
+    "D",
+    "Dsharp",
+    "Eb",
+    "E",
+    "F",
+    "Fsharp",
+    "Gb",
+    "G",
+    "Gsharp",
+    "Ab",
+    "A",
+    "Asharp",
+    "B",
+    "Bb"
+  ],
+  "suffixes": [
+    "major",
+    "minor",
+    "7",
+    "minor 7"
+  ],
+  "chords": {
+    "C": [
+      {
+        "key": "C",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "C"
+          },
+          {
+            "name": "E"
+          },
+          {
+            "name": "G"
+          }
+        ]
+      },
+      {
+        "key": "C",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "C"
+          },
+          {
+            "name": "Eb"
+          },
+          {
+            "name": "G"
+          }
+        ]
+      },
+      {
+        "key": "C",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "C"
+          },
+          {
+            "name": "E"
+          },
+          {
+            "name": "G"
+          },
+          {
+            "name": "Bb"
+          }
+        ]
+      },
+      {
+        "key": "C",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "C"
+          },
+          {
+            "name": "Eb"
+          },
+          {
+            "name": "G"
+          },
+          {
+            "name": "Bb"
+          }
+        ]
+      }
+    ],
+    "Csharp": [
+      {
+        "key": "Csharp",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "Csharp"
+          },
+          {
+            "name": "F"
+          },
+          {
+            "name": "Gsharp"
+          }
+        ]
+      },
+      {
+        "key": "Csharp",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "Csharp"
+          },
+          {
+            "name": "E"
+          },
+          {
+            "name": "Gsharp"
+          }
+        ]
+      },
+      {
+        "key": "C",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "Csharp"
+          },
+          {
+            "name": "F"
+          },
+          {
+            "name": "Gsharp"
+          },
+          {
+            "name": "B"
+          }
+        ]
+      },
+      {
+        "key": "Csharp",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "Csharp"
+          },
+          {
+            "name": "E"
+          },
+          {
+            "name": "Gsharp"
+          },
+          {
+            "name": "B"
+          }
+        ]
+      }
+    ],
+    "Db": [
+      {
+        "suffix": "major",
+        "key": "Db",
+        "position": [
+          {
+            "name": "Db"
+          },
+          {
+            "name": "B"
+          },
+          {
+            "name": "Ab"
+          }
+        ]
+      },
+      {
+        "suffix": "minor",
+        "key": "Db",
+        "position": [
+          {
+            "name": "Db"
+          },
+          {
+            "name": "E"
+          },
+          {
+            "name": "Ab"
+          }
+        ]
+      },
+      {
+        "suffix": "7",
+        "key": "Db",
+        "position": [
+          {
+            "name": "Db"
+          },
+          {
+            "name": "B"
+          },
+          {
+            "name": "Ab"
+          },
+          {
+            "name": "B"
+          }
+        ]
+      },
+      {
+        "suffix": "minor 7",
+        "name": "Db",
+        "position": [
+          {
+            "name": "Db"
+          },
+          {
+            "name": "E"
+          },
+          {
+            "name": "Ab"
+          },
+          {
+            "name": "B"
+          }
+        ]
+      }
+    ],
+    "D": [
+      {
+        "key": "D",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "D"
+          },
+          {
+            "name": "Fsharp"
+          },
+          {
+            "name": "A"
+          }
+        ]
+      },
+      {
+        "key": "D",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "D"
+          },
+          {
+            "name": "F"
+          },
+          {
+            "name": "A"
+          }
+        ]
+      },
+      {
+        "key": "D",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "D"
+          },
+          {
+            "name": "Fsharp"
+          },
+          {
+            "name": "A"
+          },
+          {
+            "name": "C"
+          }
+        ]
+      },
+      {
+        "key": "D",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "D"
+          },
+          {
+            "name": "F"
+          },
+          {
+            "name": "A"
+          },
+          {
+            "name": "C"
+          }
+        ]
+      }
+    ],
+    "Dsharp": [
+      {
+        "suffix": "major",
+        "key": "Dsharp",
+        "position": [
+          {
+            "name": "Dsharp"
+          },
+          {
+            "name": "G"
+          },
+          {
+            "name": "Asharp"
+          }
+        ]
+      },
+      {
+        "suffix": "minor",
+        "key": "Dsharp",
+        "position": [
+          {
+            "name": "Dsharp"
+          },
+          {
+            "name": "Fsharp"
+          },
+          {
+            "name": "Asharp"
+          }
+        ]
+      },
+      {
+        "suffix": "7",
+        "key": "Dsharp",
+        "position": [
+          {
+            "name": "Dsharp"
+          },
+          {
+            "name": "G"
+          },
+          {
+            "name": "Asharp"
+          },
+          {
+            "name": "Csharp"
+          }
+        ]
+      },
+      {
+        "suffix": "minor 7",
+        "key": "Dsharp",
+        "position": [
+          {
+            "name": "Dsharp"
+          },
+          {
+            "name": "Fsharp"
+          },
+          {
+            "name": "Asharp"
+          },
+          {
+            "name": "Csharp"
+          }
+        ]
+      }
+    ],
+    "Eb": [
+      {
+        "key": "Eb",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "Eb"
+          },
+          {
+            "name": "G"
+          },
+          {
+            "name": "Bb"
+          }
+        ]
+      },
+      {
+        "key": "Eb",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "Eb"
+          },
+          {
+            "name": "Gb"
+          },
+          {
+            "name": "Bb"
+          }
+        ]
+      },
+      {
+        "key": "Eb",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "Eb"
+          },
+          {
+            "name": "G"
+          },
+          {
+            "name": "Bb"
+          },
+          {
+            "name": "Db"
+          }
+        ]
+      },
+      {
+        "key": "Eb",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "Eb"
+          },
+          {
+            "name": "Gb"
+          },
+          {
+            "name": "Bb"
+          },
+          {
+            "name": "Db"
+          }
+        ]
+      }
+    ],
+    "E": [
+      {
+        "key": "E",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "E"
+          },
+          {
+            "name": "Gsharp"
+          },
+          {
+            "name": "B"
+          }
+        ]
+      },
+      {
+        "key": "E",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "E"
+          },
+          {
+            "name": "G"
+          },
+          {
+            "name": "B"
+          }
+        ]
+      },
+      {
+        "key": "E",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "E"
+          },
+          {
+            "name": "Gsharp"
+          },
+          {
+            "name": "B"
+          },
+          {
+            "name": "D"
+          }
+        ]
+      },
+      {
+        "key": "E",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "E"
+          },
+          {
+            "name": "G"
+          },
+          {
+            "name": "B"
+          },
+          {
+            "name": "D"
+          }
+        ]
+      }
+    ],
+    "F": [
+      {
+        "key": "F",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "F"
+          },
+          {
+            "name": "A"
+          },
+          {
+            "name": "C"
+          }
+        ]
+      },
+      {
+        "key": "F",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "F"
+          },
+          {
+            "name": "Ab"
+          },
+          {
+            "name": "C"
+          }
+        ]
+      },
+      {
+        "key": "F",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "F"
+          },
+          {
+            "name": "A"
+          },
+          {
+            "name": "C"
+          },
+          {
+            "name": "Eb"
+          }
+        ]
+      },
+      {
+        "key": "Fm 7",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "F"
+          },
+          {
+            "name": "Ab"
+          },
+          {
+            "name": "C"
+          },
+          {
+            "name": "Eb"
+          }
+        ]
+      }
+    ],
+    "Fsharp": [
+      {
+        "key": "Fsharp",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "Fsharp"
+          },
+          {
+            "name": "Asharp"
+          },
+          {
+            "name": "Csharp"
+          }
+        ]
+      },
+      {
+        "key": "Fsharp",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "Fsharp"
+          },
+          {
+            "name": "A"
+          },
+          {
+            "name": "Csharp"
+          }
+        ]
+      },
+      {
+        "key": "Fsharp",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "Fsharp"
+          },
+          {
+            "name": "Asharp"
+          },
+          {
+            "name": "Csharp"
+          },
+          {
+            "name": "E"
+          }
+        ]
+      },
+      {
+        "key": "Fsharp",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "Fsharp"
+          },
+          {
+            "name": "A"
+          },
+          {
+            "name": "Csharp"
+          },
+          {
+            "name": "E"
+          }
+        ]
+      }
+    ],
+    "Gb": [
+      {
+        "suffix": "major",
+        "key": "Gb",
+        "position": [
+          {
+            "name": "Gb"
+          },
+          {
+            "name": "Bb"
+          },
+          {
+            "name": "Db"
+          }
+        ]
+      },
+      {
+        "suffix": "minor",
+        "key": "Gb",
+        "position": [
+          {
+            "name": "Gb"
+          },
+          {
+            "name": "A"
+          },
+          {
+            "name": "Db"
+          }
+        ]
+      },
+      {
+        "suffix": "7",
+        "key": "Gb",
+        "position": [
+          {
+            "name": "Gb"
+          },
+          {
+            "name": "Bb"
+          },
+          {
+            "name": "Db"
+          },
+          {
+            "name": "E"
+          }
+        ]
+      },
+      {
+        "suffix": "minor 7",
+        "key": "Gb",
+        "position": [
+          {
+            "name": "Gb"
+          },
+          {
+            "name": "A"
+          },
+          {
+            "name": "Db"
+          },
+          {
+            "name": "E"
+          }
+        ]
+      }
+    ],
+    "G": [
+      {
+        "key": "G",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "G"
+          },
+          {
+            "name": "B"
+          },
+          {
+            "name": "D"
+          }
+        ]
+      },
+      {
+        "key": "G",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "G"
+          },
+          {
+            "name": "Bb"
+          },
+          {
+            "name": "D"
+          }
+        ]
+      },
+      {
+        "key": "G",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "G"
+          },
+          {
+            "name": "B"
+          },
+          {
+            "name": "D"
+          },
+          {
+            "name": "F"
+          }
+        ]
+      },
+      {
+        "key": "G",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "G"
+          },
+          {
+            "name": "Bb"
+          },
+          {
+            "name": "D"
+          },
+          {
+            "name": "F"
+          }
+        ]
+      }
+    ],
+    "Gsharp": [
+      {
+        "suffix": "major",
+        "key": "Gsharp",
+        "position": [
+          {
+            "name": "Gsharp"
+          },
+          {
+            "name": "C"
+          },
+          {
+            "name": "Dsharp"
+          }
+        ]
+      },
+      {
+        "suffix": "minor",
+        "key": "Gsharp",
+        "position": [
+          {
+            "name": "Gsharp"
+          },
+          {
+            "name": "B"
+          },
+          {
+            "name": "Dsharp"
+          }
+        ]
+      },
+      {
+        "suffix": "7",
+        "key": "Gsharp",
+        "position": [
+          {
+            "name": "Gsharp"
+          },
+          {
+            "name": "C"
+          },
+          {
+            "name": "Dsharp"
+          },
+          {
+            "name": "Fsharp"
+          }
+        ]
+      },
+      {
+        "suffix": "minor 7",
+        "key": "Gsharp",
+        "position": [
+          {
+            "name": "Gsharp"
+          },
+          {
+            "name": "B"
+          },
+          {
+            "name": "Dsharp"
+          },
+          {
+            "name": "Fsharp"
+          }
+        ]
+      }
+    ],
+    "Ab": [
+      {
+        "key": "Ab",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "Ab"
+          },
+          {
+            "name": "C"
+          },
+          {
+            "name": "Eb"
+          }
+        ]
+      },
+      {
+        "key": "Ab",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "Ab"
+          },
+          {
+            "name": "B"
+          },
+          {
+            "name": "Eb"
+          }
+        ]
+      },
+      {
+        "key": "Ab",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "Ab"
+          },
+          {
+            "name": "C"
+          },
+          {
+            "name": "Eb"
+          },
+          {
+            "name": "Gb"
+          }
+        ]
+      },
+      {
+        "key": "Ab",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "Ab"
+          },
+          {
+            "name": "B"
+          },
+          {
+            "name": "Eb"
+          },
+          {
+            "name": "Gb"
+          }
+        ]
+      }
+    ],
+    "A": [
+      {
+        "key": "A",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "A"
+          },
+          {
+            "name": "Csharp"
+          },
+          {
+            "name": "E"
+          }
+        ]
+      },
+      {
+        "key": "A",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "A"
+          },
+          {
+            "name": "C"
+          },
+          {
+            "name": "E"
+          }
+        ]
+      },
+      {
+        "key": "A",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "A"
+          },
+          {
+            "name": "Csharp"
+          },
+          {
+            "name": "E"
+          },
+          {
+            "name": "G"
+          }
+        ]
+      },
+      {
+        "key": "A",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "A"
+          },
+          {
+            "name": "C"
+          },
+          {
+            "name": "E"
+          },
+          {
+            "name": "G"
+          }
+        ]
+      }
+    ],
+    "Asharp": [
+      {
+        "suffix": "major",
+        "key": "Asharp",
+        "position": [
+          {
+            "name": "Asharp"
+          },
+          {
+            "name": "D"
+          },
+          {
+            "name": "F"
+          }
+        ]
+      },
+      {
+        "suffix": "minor",
+        "key": "Asharp",
+        "position": [
+          {
+            "name": "Asharp"
+          },
+          {
+            "name": "Csharp"
+          },
+          {
+            "name": "F"
+          }
+        ]
+      },
+      {
+        "suffix": "7",
+        "key": "Asharp",
+        "position": [
+          {
+            "name": "Asharp"
+          },
+          {
+            "name": "D"
+          },
+          {
+            "name": "F"
+          },
+          {
+            "name": "Gsharp"
+          }
+        ]
+      },
+      {
+        "suffix": "minor 7",
+        "key": "Asharp",
+        "position": [
+          {
+            "name": "Asharp"
+          },
+          {
+            "name": "Csharp"
+          },
+          {
+            "name": "F"
+          },
+          {
+            "name": "Gsharp"
+          }
+        ]
+      }
+    ],
+    "B": [
+      {
+        "key": "B",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "B"
+          },
+          {
+            "name": "Dsharp"
+          },
+          {
+            "name": "Fsharp"
+          }
+        ]
+      },
+      {
+        "key": "B",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "B"
+          },
+          {
+            "name": "D"
+          },
+          {
+            "name": "Fsharp"
+          }
+        ]
+      },
+      {
+        "key": "B",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "B"
+          },
+          {
+            "name": "Dsharp"
+          },
+          {
+            "name": "Fsharp"
+          },
+          {
+            "name": "A"
+          }
+        ]
+      },
+      {
+        "key": "B",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "B"
+          },
+          {
+            "name": "D"
+          },
+          {
+            "name": "Fsharp"
+          },
+          {
+            "name": "A"
+          }
+        ]
+      }
+    ],
+    "Bb": [
+      {
+        "key": "Bb",
+        "suffix": "major",
+        "position": [
+          {
+            "name": "Bb"
+          },
+          {
+            "name": "D"
+          },
+          {
+            "name": "F"
+          }
+        ]
+      },
+      {
+        "key": "Bb",
+        "suffix": "minor",
+        "position": [
+          {
+            "name": "Bb"
+          },
+          {
+            "name": "Db"
+          },
+          {
+            "name": "F"
+          }
+        ]
+      },
+      {
+        "key": "Bb",
+        "suffix": "7",
+        "position": [
+          {
+            "name": "Bb"
+          },
+          {
+            "name": "D"
+          },
+          {
+            "name": "F"
+          },
+          {
+            "name": "Ab"
+          }
+        ]
+      },
+      {
+        "key": "Bb",
+        "suffix": "minor 7",
+        "position": [
+          {
+            "name": "Bb"
+          },
+          {
+            "name": "Db"
+          },
+          {
+            "name": "F"
+          },
+          {
+            "name": "Ab"
+          }
+        ]
+      }
+    ]
+  }
+}
