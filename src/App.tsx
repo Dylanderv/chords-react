@@ -36,7 +36,6 @@ const App: React.FC = () => {
         </Toolbar>
       </AppBar>
       <Router>
-        <Link to={CHORD_VIEWER_BASE_ROUTE}>Chord Viewer</Link>
         <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument?/:mainChord?/:suffix?"} component={InstrumentSelector}/>
       </Router>
 

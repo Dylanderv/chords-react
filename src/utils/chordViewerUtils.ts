@@ -1,5 +1,11 @@
 import PianoSVG from '../svg/PianoKeyboard';
 import { IPianoChord, blackKeys } from '../model/piano/IPianoChord';
+import { SVG_SIZE } from '../components/chords-viewer/ChordViewer';
+import { InstrumentType } from '../model/InstrumentType';
+import { IGuitarChords } from '../model/guitar/IGuitarChords';
+import { IUkuleleChords } from '../model/ukulele/IUkuleleChords';
+import { IChordDBChords } from '../model/IChordDBChords';
+import { ChordBox } from 'vexchords'
 
 const Serializer = new XMLSerializer();
 
@@ -78,3 +84,62 @@ export function renderPianoSvg(chord: IPianoChord) {
   // On retourne le svg sur notre element
   return Serializer.serializeToString(piano);
 }
+
+export function getGuitarUkuleleSvg(instrument: InstrumentType, chordsData: IGuitarChords|IUkuleleChords, routerMainChord: string, routerSuffix: string) {
+  if (chordsData.chords && chordsData.chords !== undefined && chordsData.chords !== null && chordsData.chords[routerMainChord]) {
+    let chord: IChordDBChords = chordsData
+      .chords[routerMainChord]!
+      .find((chord: IChordDBChords) => chord.suffix === routerSuffix);
+    let data;
+    let selector = document.createElement('svg');
+    if (chord !== undefined && chord.positions && chord.positions.length > 0) {
+      data = {
+        name: chord.key,
+        chords: chord.positions[0].frets.map((fret, index) => fret === -1 ? [index+1, 'x'] : [index+1, fret]),
+        finger: chord.positions[0].fingers,
+        baseFret: chord.positions[0].baseFret,
+        barres: chord.positions[0].barres!.map(barre => barreInterpretor(chord.positions[0].frets, barre, chordsData.main.numberOfChords))
+      }
+      const test = new ChordBox(selector, {
+        numStrings: instrument === 'guitar' ? 6 : 4,
+        width: SVG_SIZE.width,
+        height: SVG_SIZE.height
+      });
+      test.draw({
+        chord: data.chords,
+        position: data.baseFret,
+        barres: data.barres,
+        tuning: chordsData.tunings.standard
+      })
+    }
+    return selector;
+  }
+}
+
+function barreInterpretor(frets: number[], barre: number, chordsNumber: number) {
+  let minFret = chordsNumber;
+  let maxFret = 0;
+
+  frets.forEach((fret,index) => {
+    if (fret === barre) {
+      if (index + 1 < minFret) {
+        minFret = index + 1
+      }
+      if (index + 1 > maxFret) {
+        maxFret = index + 1
+      }
+    }
+  })
+  return {fromString: maxFret, toString: minFret, fret: barre}
+}
+
+/*
+
+On part du principe que :
+Quand on a un barré sur une case :
+ - On prend toutes les frettes sur la case et on met le barré de la plus petite à la plus grande
+
+
+*/
+
+
