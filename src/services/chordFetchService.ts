@@ -15,7 +15,7 @@ export function getInstrumentList(): {type: 'instrumentList', data: ['ukulele', 
 export function getPianoChords(): {type: 'piano', data: IPianoChords} {
   return {
     type: 'piano',
-    data: pianoChords
+    data: pianoChords as IPianoChords
   }
 }
 

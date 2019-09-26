@@ -5,7 +5,6 @@ import { CHORD_VIEWER_BASE_ROUTE } from './utils/routerUtils';
 import 'typeface-roboto';
 import InstrumentSelector from './components/selector/InstrumentSelector';
 import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Theme, createStyles } from '@material-ui/core';
-import ChordViewer from './components/chords-viewer/ChordViewer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,7 +38,6 @@ const App: React.FC = () => {
       <Router>
         <Link to={CHORD_VIEWER_BASE_ROUTE}>Chord Viewer</Link>
         <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument?/:mainChord?/:suffix?"} component={InstrumentSelector}/>
-        {/* <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument/:mainChord/:suffix"} component={ChordViewer} /> */}
       </Router>
 
     </div>

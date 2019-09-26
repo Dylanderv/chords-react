@@ -6,7 +6,7 @@ export interface IPianoChords {
   },
   tunings: {
   },
-  keys: string[],
+  keys: PianoKeys[],
   suffixes: string[],
   chords: {
     C: IPianoChord[],
@@ -25,6 +25,8 @@ export interface IPianoChords {
     A: IPianoChord[],
     Asharp: IPianoChord[],
     Bb: IPianoChord[],
-    B: IPianoChords[]
+    B: IPianoChord[]
   }
 }
+
+export type PianoKeys = "C"|"Csharp"|"Db"|"D"|"Dsharp"|"Eb"|"E"|"F"|"Fsharp"|"Gb"|"G"|"Gsharp"|"Ab"|"A"|"Asharp"|"Bb"|"B"
