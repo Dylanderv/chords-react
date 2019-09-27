@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles, Theme, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { createStyles, Theme, FormControl, InputLabel, Select, MenuItem, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { InstrumentType } from '../../model/InstrumentType';
 import useChordService from '../../hooks/useChordService';
@@ -41,6 +41,7 @@ const ChordSelector: React.FC<chordSelectorProps> = ({ instrument }) => {
   let mainChordParam = router.match.params.mainChord !== undefined ? router.match.params.mainChord : '';
   let suffixParam = router.match.params.suffix !== undefined ? router.match.params.suffix : '';
 
+
   // Add instrument + check si c'est le meme qu'en paramètre
   const [values, setValues] = React.useState({
     mainChord: mainChordParam,
@@ -53,7 +54,6 @@ const ChordSelector: React.FC<chordSelectorProps> = ({ instrument }) => {
       ...oldValues,
       [event.target.name as string]: event.target.value,
     }));
-    console.log('event target', event.target)
     let pathToGo = [
       CHORD_VIEWER_BASE_ROUTE,
       instrument,
@@ -76,21 +76,33 @@ const ChordSelector: React.FC<chordSelectorProps> = ({ instrument }) => {
       {service.status === 'loading' && <div>Loading...</div>}
       {service.status === 'loaded' && (
       <div>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="age-helper">Main Chord</InputLabel>
-          <Select value={values.mainChord} onChange={handleChange} inputProps={{ name: 'mainChord' }}>
-            {mainChords.map(mainChord => <MenuItem key={mainChord} value={mainChord}>{mainChord}</MenuItem>)}
-          </Select>
-        </FormControl>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="age-helper">Suffix</InputLabel>
-          <Select value={values.suffix} onChange={handleChange} inputProps={{ name: 'suffix' }}>
-            {suffixes.map(suffix => <MenuItem key={suffix} value={suffix}>{suffix}</MenuItem>)}
-          </Select>
-        </FormControl>
-        <Router history={router.history}>
-          <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument/:mainChord/:suffix"} component={ChordViewer} />
-        </Router>
+        <Grid container spacing={0} direction="column" alignItems="center">
+
+          <Grid item xs={12}>
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="age-helper">Main Chord</InputLabel>
+              <Select value={values.mainChord} onChange={handleChange} inputProps={{ name: 'mainChord' }}>
+                {mainChords.map(mainChord => <MenuItem key={mainChord} value={mainChord}>{mainChord}</MenuItem>)}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="age-helper">Suffix</InputLabel>
+              <Select value={values.suffix} onChange={handleChange} inputProps={{ name: 'suffix' }}>
+                {suffixes.map(suffix => <MenuItem key={suffix} value={suffix}>{suffix}</MenuItem>)}
+              </Select>
+            </FormControl>
+          </Grid>
+          {values.mainChord !== '' && values.suffix !== '' ? 
+            <Grid item xs={12}>
+              <ChordViewer instrument={instrument} mainChord={values.mainChord} suffix={values.suffix}></ChordViewer>
+            </Grid> 
+            : <div></div>
+          }
+          
+
+        </Grid> 
+        
+        
       </div>
       )}
       {service.status === 'error' && (

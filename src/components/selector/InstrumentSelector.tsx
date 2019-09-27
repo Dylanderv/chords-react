@@ -55,8 +55,7 @@ const InstrumentSelector: React.FC = () => {
   if (match.params.instrument !== undefined) {
     instrumentParam = match.params.instrument as InstrumentType;
   } else {
-    instrumentParam = 'ukulele'
-    history.replace(CHORD_VIEWER_BASE_ROUTE + '/ukulele')
+    instrumentParam = 'ukulele';
   }
 
   const [value, setValue] = React.useState(0);
@@ -78,7 +77,7 @@ const InstrumentSelector: React.FC = () => {
   if (service.status === 'loaded') {
     dataToDisplay = (service.payload.data as InstrumentType[]);
     let index = dataToDisplay.findIndex(elem => elem === instrumentParam);
-    if (value !== index) setValue(index === -1 ? 0 : index)
+    // if (value !== index) setValue(index === -1 ? 0 : index)
   }
 
   return (
@@ -86,7 +85,7 @@ const InstrumentSelector: React.FC = () => {
         {service.status === 'loading' && <div>Loading...</div>}
         {service.status === 'loaded' && (
         <div>
-          <Tabs value={value} onChange={handleOnChange}>
+          <Tabs value={value} onChange={handleOnChange} centered>
             {dataToDisplay.map((elem, index) => <Tab key={elem} label={elem} {...a11yProps(index)}></Tab>)}
           </Tabs>
           {dataToDisplay.map((elem, index) => <TabPanel key={elem} index={index} value={value}>
