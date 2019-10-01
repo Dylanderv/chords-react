@@ -6,7 +6,8 @@ import 'typeface-roboto';
 import InstrumentSelector from './components/selector/InstrumentSelector';
 import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Theme, createStyles, ButtonGroup } from '@material-ui/core';
 import Login from './components/Login';
-import { useReactRouter } from './hooks/useReactRouter';
+
+// Use context https://medium.com/hackernoon/learn-react-hooks-by-building-an-auth-based-to-do-app-c2d143928b0b
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
