@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Grid, Paper, createStyles, Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { authenticate } from '../services/loginService';
+import { authenticate, register, isAuth, logOut } from '../services/loginService';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,9 +17,19 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
 
   const handleLoginButtonClick = () => {
-    console.log(username);
-    console.log(password);
     authenticate(username, password);
+  }
+
+  const handleRegisterButtonClick = () => {
+    register(username, password);
+  }
+
+  const handleIsAuthButtonClick = () => {
+    isAuth()
+  }
+
+  const handleLogOutButtonClick = () => {
+    logOut()
   }
 
   const handleAccountNameChange = (ev) => {
@@ -43,6 +53,9 @@ const Login: React.FC = () => {
             </Grid>
             <Grid item xs={12}>
               <Button onClick={handleLoginButtonClick}>Login</Button>
+              <Button onClick={handleRegisterButtonClick}>Register</Button>
+              <Button onClick={handleIsAuthButtonClick}>Is Authenticated</Button>
+              <Button onClick={handleLogOutButtonClick}>Logout</Button>
             </Grid>
           </Grid>
         </Paper>

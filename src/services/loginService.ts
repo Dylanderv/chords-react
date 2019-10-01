@@ -1,20 +1,27 @@
-const ENDPOINT = 'http://localhost:3333/'
+import { ENDPOINT, fetchHandler } from "../utils/fetchUtils";
 
 export async function authenticate(username: string, password: string) {
-  let fetchRes;
-  try {
-    fetchRes = await fetch(ENDPOINT + 'auth/login', {
-      mode: 'cors',
-      method: 'post',
-      body: `{username: ${username}, password: ${password}}`
-    });
-    console.log(fetchRes);
-  } catch (err) {
-    console.log(err);
-  }
-  try {
-    console.log(await fetchRes.json());
-  } catch(err) {
-    console.log(err);
-  }
+  let body = new URLSearchParams([ ['username', username], ['password', password]]);
+  let url = new URL(ENDPOINT + 'auth/login/')
+  let fetchRes = await fetchHandler(url, 'post', undefined, body)
+  console.log(fetchRes);
+}
+
+export async function register(username: string, password: string) {
+  let body = new URLSearchParams([ ['username', username], ['password', password]]);
+  let url = new URL(ENDPOINT + 'auth/register')
+  let fetchRes = await fetchHandler(url, 'post', undefined, body)
+  console.log(fetchRes);
+}
+
+export async function isAuth() {
+  let url = new URL(ENDPOINT + 'auth/isauth')
+  let fetchRes = await fetchHandler(url, 'get')
+  console.log(fetchRes);
+}
+
+export async function logOut() {
+  let url = new URL(ENDPOINT + 'auth/logout')
+  let fetchRes = await fetchHandler(url, 'get')
+  console.log(fetchRes);
 }
