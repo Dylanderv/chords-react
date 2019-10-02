@@ -1,9 +1,5 @@
 import { FetchError } from "../model/FetchError";
 
-const ENDPOINT = 'http://localhost:3333/'
-
-export {ENDPOINT}
-
 type FetchMethods = 'get' | 'post' | 'put' | 'delete';
 
 export function fetchBuilder(url: URL, method: FetchMethods, headers?: Headers, body?) {

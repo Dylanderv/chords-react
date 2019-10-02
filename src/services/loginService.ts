@@ -1,4 +1,5 @@
-import { ENDPOINT, fetchHandler } from "../utils/fetchUtils";
+import { fetchHandler } from "../utils/fetchUtils";
+import { ENDPOINT } from "../utils/consts";
 
 export async function authenticate(username: string, password: string) {
   let body = new URLSearchParams([ ['username', username], ['password', password]]);
