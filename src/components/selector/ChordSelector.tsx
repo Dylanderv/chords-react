@@ -107,7 +107,7 @@ const ChordSelector: React.FC<chordSelectorProps> = ({ instrumentId, instrumentN
           </Grid>
           {values.key !== '' && values.suffix !== '' && values.key !== undefined ? 
             <Grid item xs={12}>
-              <ChordViewer instrumentId={instrumentId} key={values.key} suffix={values.suffix}></ChordViewer>
+              <ChordViewer instrumentId={instrumentId} instrumentName={instrumentName} mainKey={values.key} suffix={values.suffix}></ChordViewer>
             </Grid> 
             : <div></div>
           }

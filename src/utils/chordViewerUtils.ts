@@ -46,8 +46,26 @@ const keyOrder: {[key in svgKey]: number} = {
  * Permet de retourner un SVG affichant l'accord `chord`
  * @param chord chord à afficher
  */
-export function renderPianoSvg(chord: IPianoChord) {
+export function renderPianoSvg(chord: IPianoChord, theme: 'light'|'dark') {
   const piano = new DOMParser().parseFromString(PianoSVG, 'text/xml');
+  
+  // Mise en place du thème
+  if (theme === 'dark') {
+    let pianoKeys = piano.getElementsByClassName('piano-key');
+    for (let item in pianoKeys) {
+      let pianoKey = pianoKeys[item];
+      if (pianoKey.classList && pianoKey.classList.contains('white-key')) {
+        pianoKey.setAttribute('fill', '#4B4B4B');
+        pianoKey.setAttribute('stroke', '#979797');
+      } else if (pianoKey.classList && pianoKey.classList.contains('black-key')) {
+        pianoKey.setAttribute('fill', '#e5e5e5');
+        pianoKey.setAttribute('stroke', '#555555');
+      }
+      
+    }
+  }
+
+
   // Initialisation pour la première touche
   let firstKey = chord.position[0].name;
   // Si le nom de l'accord ne correspond pas au nom dans le svg on le traduit
@@ -85,23 +103,19 @@ export function renderPianoSvg(chord: IPianoChord) {
   return Serializer.serializeToString(piano);
 }
 
-export function getGuitarUkuleleSvg(instrument: InstrumentType, chordsData: IGuitarChords|IUkuleleChords, routerMainChord: string, routerSuffix: string) {
-  if (chordsData.chords && chordsData.chords !== undefined && chordsData.chords !== null && chordsData.chords[routerMainChord]) {
-    let chord: IChordDBChords = chordsData
-      .chords[routerMainChord]!
-      .find((chord: IChordDBChords) => chord.suffix === routerSuffix);
-    let data;
-    let selector = document.createElement('svg');
-    if (chord !== undefined && chord.positions && chord.positions.length > 0) {
+export function getGuitarUkuleleSvg(chord, instrumentName: string) {
+  let selector = document.createElement('svg');
+  let data;
+    if (chord !== undefined && chord.position && chord.position.length > 0) {
       data = {
         name: chord.key,
-        chords: chord.positions[0].frets.map((fret, index) => fret === -1 ? [index+1, 'x'] : [index+1, fret]),
-        finger: chord.positions[0].fingers,
-        baseFret: chord.positions[0].baseFret,
-        barres: chord.positions[0].barres!.map(barre => barreInterpretor(chord.positions[0].frets, barre, chordsData.main.numberOfChords))
+        chords: chord.position[0].frets.map((fret, index) => fret === -1 ? [index+1, 'x'] : [index+1, fret]),
+        finger: chord.position[0].fingers,
+        baseFret: chord.position[0].baseFret,
+        barres: chord.position[0].barres!.map(barre => barreInterpretor(chord.position[0].frets, barre, instrumentName === 'guitar' ? 6 : 4))
       }
       const test = new ChordBox(selector, {
-        numStrings: instrument === 'guitar' ? 6 : 4,
+        numStrings: instrumentName === 'guitar' ? 6 : 4,
         width: SVG_SIZE.width,
         height: SVG_SIZE.height
       });
@@ -109,11 +123,10 @@ export function getGuitarUkuleleSvg(instrument: InstrumentType, chordsData: IGui
         chord: data.chords,
         position: data.baseFret,
         barres: data.barres,
-        tuning: chordsData.tunings.standard
+        // tuning: chordsData.tunings.standard
       })
     }
-    return selector;
-  }
+  return selector;
 }
 
 function barreInterpretor(frets: number[], barre: number, chordsNumber: number) {
