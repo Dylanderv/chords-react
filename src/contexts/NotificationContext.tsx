@@ -7,7 +7,7 @@ import { Notification } from '../model/Notification';
 import { NotificationType } from '../components/MySnackbarContentWrapper';
 import useNotificationHandler from '../hooks/useNotificationHandler';
 
-interface INotificationContextInterface {
+export interface INotificationContextInterface {
   notification: Notification;
   showNotification: (notificationMessage: string, notificationType: NotificationType) => void;
   closeNotification: () => void;

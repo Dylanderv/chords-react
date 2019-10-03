@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import { CHORD_VIEWER_BASE_ROUTE } from '../utils/routerUtils';
 import InstrumentSelector from './selector/InstrumentSelector';
 import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Theme, createStyles, ButtonGroup, Snackbar } from '@material-ui/core';
-import Login from './Login';
+import Login, { handleLogOutButtonClick } from './Login';
 import { authContext } from '../contexts/AuthContext';
 import MySnackbarContentWrapper, { NotificationType } from './MySnackbarContentWrapper';
 import useNotificationHandler from '../hooks/useNotificationHandler';
@@ -32,11 +32,7 @@ const MainComponent: React.FC = () => {
   const classes = useStyles();
   const auth = React.useContext(authContext);
   const notificationHandler = React.useContext(notificationContext);
-
-  const handleClick = (message: string, type: NotificationType) => {
-    notificationHandler.showNotification(message, type)
-  };
-
+  
   const handleClose = (event?: SyntheticEvent, reason?: string) => {
     if (reason === 'clickaway') {
       return;
@@ -46,10 +42,6 @@ const MainComponent: React.FC = () => {
 
   return (
     <div className={classes.root}>
-
-      <Button variant="outlined" className={classes.margin} onClick={() => handleClick('test', 'error')}>
-        Open success snackbar
-      </Button>
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
@@ -66,8 +58,6 @@ const MainComponent: React.FC = () => {
         />
       </Snackbar>
 
-
-
       <Router>
         <AppBar position="static">
           <Toolbar>
@@ -79,11 +69,16 @@ const MainComponent: React.FC = () => {
             </Typography>
             <ButtonGroup aria-label="outlined button group">
               <Button component={Link} to={CHORD_VIEWER_BASE_ROUTE} color="inherit">Chord</Button>
-              <Button component={Link} to='/login' color="inherit">Login</Button>
+              {auth.auth.id === 0 ? 
+                <Button component={Link} to='/login' color="inherit">Login</Button>
+                :
+                <Button onClick={async () => await handleLogOutButtonClick(notificationHandler, auth)} color="inherit">Logout</Button>
+              }
             </ButtonGroup>
           </Toolbar>
         </AppBar>
-        <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument?/:mainChord?/:suffix?"} component={InstrumentSelector}/>
+        
+        <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument?/:key?/:suffix?"} component={InstrumentSelector}/>
         <Route path={'/login'} component={Login}/>
       </Router>
     </div>

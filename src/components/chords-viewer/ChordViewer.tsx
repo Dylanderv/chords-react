@@ -1,40 +1,58 @@
 import React from 'react';
 import useChordService from '../../hooks/useChordService';
-import { InstrumentType } from '../../model/InstrumentType';
-import { RouteComponentProps, StaticContext } from 'react-router';
-import { useReactRouter } from '../../hooks/useReactRouter';
 import { renderPianoSvg, getGuitarUkuleleSvg } from '../../utils/chordViewerUtils';
-import { IPianoChords, PianoKeys } from '../../model/piano/IPianoChords';
+import { IPianoChords } from '../../model/piano/IPianoChords';
 import { IPianoChord } from '../../model/piano/IPianoChord';
 import { IGuitarChords } from '../../model/guitar/IGuitarChords';
 import { IUkuleleChords } from '../../model/ukulele/IUkuleleChords';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
-type TParams = {instrument: InstrumentType, mainChord: string, suffix: string}
+type TParams = {instrumentId: string, key: string, suffix: string}
 
 export const SVG_SIZE: {width: number, height: number} = { width: 250, height: 400 }
 
-const ChordViewer: React.FC<TParams> = ( { instrument, mainChord, suffix } ) => {
-  const router = useReactRouter() as RouteComponentProps<TParams, StaticContext, any>;
-  const service = useChordService(instrument);
+function chordQueryBuilder(instrumentId: string, key: string, suffix: string) {
+  return gql`
+  {
+    chordFromName(instrumentId: "${instrumentId}", key: "${key}",suffix: "${suffix}") {
+      id
+      key
+      suffix
+      position
+      info
+    }
+  }
+  `
+}
+
+const ChordViewer: React.FC<TParams> = ( { instrumentId, key, suffix } ) => {
+  console.log(instrumentId, key, suffix);
+  const { error, data, loading } = useQuery(chordQueryBuilder(instrumentId, key, suffix));
+  const service = useChordService('ukulele')//instrumentId);
 
   let svg = '';
   let svgGuitar;
   let svgUkulele;
   if (service.status === "loaded") {
     // Récupérer les données à afficher dans le selector
-    if (instrument === 'piano' && (service.payload.data as IPianoChords)!.main!.name! === 'piano') {
+    if (instrumentId === 'piano' && (service.payload.data as IPianoChords)!.main!.name! === 'piano') {
       let pianoChords = (service.payload.data as IPianoChords).chords
-      if (pianoChords && pianoChords !== undefined && pianoChords !== null && pianoChords[mainChord]) {
-        let pianoChord = pianoChords[mainChord].find((chord: IPianoChord) => chord.suffix === suffix);
+      if (pianoChords && pianoChords !== undefined && pianoChords !== null && pianoChords[key]) {
+        let pianoChord = pianoChords[key].find((chord: IPianoChord) => chord.suffix === suffix);
         if (pianoChord !== undefined) {
           svg = renderPianoSvg(pianoChord);
         }
       }
-    } else if(instrument === 'guitar' && (service.payload.data as IGuitarChords)!.main!.name! === 'guitar') {
-      svgGuitar = getGuitarUkuleleSvg(instrument, service.payload.data as IGuitarChords|IUkuleleChords, mainChord, suffix);
-    } else if (instrument === 'ukulele' && (service.payload.data as IGuitarChords)!.main!.name! === 'ukulele') {
-      svgUkulele = getGuitarUkuleleSvg(instrument, service.payload.data as IGuitarChords|IUkuleleChords, mainChord, suffix);
+    } else if(instrumentId === 'guitar' && (service.payload.data as IGuitarChords)!.main!.name! === 'guitar') {
+      svgGuitar = getGuitarUkuleleSvg(instrumentId, service.payload.data as IGuitarChords|IUkuleleChords, key, suffix);
+    } else if (instrumentId === 'ukulele' && (service.payload.data as IGuitarChords)!.main!.name! === 'ukulele') {
+      svgUkulele = getGuitarUkuleleSvg(instrumentId, service.payload.data as IGuitarChords|IUkuleleChords, key, suffix);
     }
+  }
+
+  if (loading === false && error === undefined) {
+    console.log(data);
   }
 
   return (
@@ -42,13 +60,13 @@ const ChordViewer: React.FC<TParams> = ( { instrument, mainChord, suffix } ) => 
         {service.status === 'loading' && <div>Loading...</div>}
         {service.status === 'loaded' && (
         <div>
-          {instrument === 'piano' && svg !== '' ? 
+          {instrumentId === 'piano' && svg !== '' ? 
             <svg width="90vw" dangerouslySetInnerHTML={{__html: svg}}></svg> : <div></div>
           }
-          {(instrument === 'guitar') && svgGuitar !== undefined ? 
+          {(instrumentId === 'guitar') && svgGuitar !== undefined ? 
             <svg width={SVG_SIZE.width} height={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svgGuitar.outerHTML}}></svg> : <div></div>
           }
-          {(instrument === 'ukulele') && svgUkulele !== undefined ? 
+          {(instrumentId === 'ukulele') && svgUkulele !== undefined ? 
             <svg width={SVG_SIZE.width} height={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svgUkulele.outerHTML}}></svg> : <div></div>
           }
         </div>

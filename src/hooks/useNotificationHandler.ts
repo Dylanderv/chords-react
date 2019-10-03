@@ -1,6 +1,5 @@
 import * as React from "react";
 import { NotificationType } from "../components/MySnackbarContentWrapper";
-import { Notification } from "../model/Notification";
 
 const useNotificationHandler = () => {
   const [message, setMessage] = React.useState<string | undefined>(undefined);
@@ -28,11 +27,6 @@ const useNotificationHandler = () => {
     }
     setMessage(undefined);
   };
-
-  const notification: Notification = {
-    message,
-    type
-  }
 
   return { notification: { message, type }, showNotification, closeNotification };
 };

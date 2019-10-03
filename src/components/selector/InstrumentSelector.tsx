@@ -7,6 +7,8 @@ import ChordSelector, { TParams } from './ChordSelector';
 import { useReactRouter } from '../../hooks/useReactRouter';
 import { CHORD_VIEWER_BASE_ROUTE } from '../../utils/routerUtils';
 import { RouteComponentProps, StaticContext } from 'react-router';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,9 +47,17 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+const INSTRUMENT_QUERY = gql`
+  {
+    instruments {
+      id
+      name
+    }
+  }
+`;
 
 const InstrumentSelector: React.FC = () => {
-  const service = useChordService("instrumentList")
+  const { loading, error, data } = useQuery(INSTRUMENT_QUERY);
   const { history, match } = useReactRouter() as RouteComponentProps<TParams, StaticContext, any>;
   const classes = useStyles();
 
@@ -61,39 +71,41 @@ const InstrumentSelector: React.FC = () => {
   const [value, setValue] = React.useState(0);
   type routeInfoType = {[instrument in InstrumentType]: string};
   const [routeInfos, setRouteInfos] = React.useState<routeInfoType>({} as routeInfoType);
-  let dataToDisplay: InstrumentType[] = [];
+  let dataToDisplay: {name: InstrumentType, id: string}[] = [];
 
   const handleOnChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setRouteInfos({ ...routeInfos, [dataToDisplay[value] as InstrumentType]: history.location.pathname });
+    let instrumentName = dataToDisplay.map(instrument => instrument.name);
+    setRouteInfos({ ...routeInfos, [instrumentName[value] as InstrumentType]: history.location.pathname });
     setValue(newValue);
     let newHistory = '';
-    if (routeInfos[dataToDisplay[newValue]] && routeInfos[dataToDisplay[newValue]] !== null ) {
-      newHistory = routeInfos[dataToDisplay[newValue]];
+    if (routeInfos[instrumentName[newValue]] && routeInfos[instrumentName[newValue]] !== null ) {
+      newHistory = routeInfos[instrumentName[newValue]];
     }
-    history.replace(newHistory === '' ? CHORD_VIEWER_BASE_ROUTE + '/' + dataToDisplay[newValue] : newHistory)
+    history.replace(newHistory === '' ? CHORD_VIEWER_BASE_ROUTE + '/' + instrumentName[newValue] : newHistory)
   }
 
-  
-  if (service.status === 'loaded') {
-    dataToDisplay = (service.payload.data as InstrumentType[]);
-    let index = dataToDisplay.findIndex(elem => elem === instrumentParam);
-    // if (value !== index) setValue(index === -1 ? 0 : index)
+  if (loading === false && error === undefined) {
+    dataToDisplay = data.instruments;
+    let index = dataToDisplay.findIndex(elem => elem.name === instrumentParam);
+    if (value !== index) setValue(index === -1 ? 0 : index)
   }
 
   return (
       <div className={classes.root}>
-        {service.status === 'loading' && <div>Loading...</div>}
-        {service.status === 'loaded' && (
+        {loading === true && <div>Loading...</div>}
+        {loading === false && error === undefined && (
         <div>
           <Tabs value={value} onChange={handleOnChange} centered>
-            {dataToDisplay.map((elem, index) => <Tab key={elem} label={elem} {...a11yProps(index)}></Tab>)}
+            {dataToDisplay.map((instrument, index) => <Tab key={instrument.id} label={instrument.name} {...a11yProps(index)}></Tab>)}
           </Tabs>
-          {dataToDisplay.map((elem, index) => <TabPanel key={elem} index={index} value={value}>
-            <ChordSelector instrument={elem}></ChordSelector>
-          </TabPanel>)}
+          {dataToDisplay.map((instrument, index) => 
+            <TabPanel key={instrument.id} index={index} value={value}>
+              <ChordSelector instrumentId={instrument.id} instrumentName={instrument.name}></ChordSelector>
+            </TabPanel>
+          )}
         </div>
         )}
-        {service.status === 'error' && (
+        {error !== undefined && (
           <div>Error, the backend moved to the dark side.</div>
         )}
       </div>

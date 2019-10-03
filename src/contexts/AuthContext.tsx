@@ -4,7 +4,7 @@ import { DEFAULT_USER_AUTH } from '../utils/consts';
 import useAuthHandler from '../hooks/AuthHandler';
 import { getStoredUserAuth } from '../utils/authUtils';
 
-interface IAuthContextInterface {
+export interface IAuthContextInterface {
   auth: UserAuth;
   setAuthStatus: (userAuth: UserAuth) => void;
   setUnauthStatus: () => void;

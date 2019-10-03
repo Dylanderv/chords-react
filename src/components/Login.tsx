@@ -4,11 +4,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/styles';
 import { authenticate, register, isAuth, logOut } from '../services/loginService';
 import { red, green } from '@material-ui/core/colors';
-import { authContext } from '../contexts/AuthContext';
+import { authContext, IAuthContextInterface } from '../contexts/AuthContext';
 import useNotificationHandler from '../hooks/useNotificationHandler';
 import { UserAuth } from '../model/UserAuth';
 import { useReactRouter } from '../hooks/useReactRouter';
-import { notificationContext } from '../contexts/NotificationContext';
+import { notificationContext, INotificationContextInterface } from '../contexts/NotificationContext';
 
 const ERROR_400_AUTH = 'Requête invalide'
 const ERROR_401_AUTH = 'Nom de compte ou mot de passe incorrect'
@@ -100,21 +100,6 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleLogOutButtonClick = async () => {
-    try {
-      await logOut()
-      notificationHandler.showNotification('Vous êtes bien déconnecté', 'success');
-    } catch (err) {
-      if (err.code === 401) {
-        // Vous n'êtes pas connecté
-        notificationHandler.showNotification(ERROR_401_LOGOUT, 'error')
-      } else {
-        // erreur serveur inconnue
-        notificationHandler.showNotification(ERROR_OTHER_LOGOUT, 'error')
-      }
-    }
-  };
-
   return (
     <Grid container spacing={0} direction="column" alignItems="center" justify="center" style={{ minHeight: '100vh' }}>
       <Grid item>
@@ -131,7 +116,7 @@ const Login: React.FC = () => {
               <Button onClick={handleLoginButtonClick}>Login</Button>
               <Button onClick={handleRegisterButtonClick}>Register</Button>
               <Button onClick={handleIsAuthButtonClick}>Is Authenticated</Button>
-              <Button onClick={handleLogOutButtonClick}>Logout</Button>
+              <Button onClick={() => handleLogOutButtonClick(notificationHandler, auth)}>Logout</Button>
             </Grid>
           </Grid>
         </Paper>
@@ -139,5 +124,21 @@ const Login: React.FC = () => {
     </Grid>
   )
 }
+
+export const handleLogOutButtonClick = async (notificationHandler: INotificationContextInterface, auth: IAuthContextInterface) => {
+  try {
+    await logOut()
+    notificationHandler.showNotification('Vous êtes bien déconnecté', 'success');
+    auth.setUnauthStatus();
+  } catch (err) {
+    if (err.code === 401) {
+      // Vous n'êtes pas connecté
+      notificationHandler.showNotification(ERROR_401_LOGOUT, 'error')
+    } else {
+      // erreur serveur inconnue
+      notificationHandler.showNotification(ERROR_OTHER_LOGOUT, 'error')
+    }
+  }
+};
 
 export default Login;
