@@ -8,6 +8,7 @@ import { IUkuleleChords } from '../../model/ukulele/IUkuleleChords';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { TParams } from '../selector/ChordSelector';
+import { useTheme } from '@material-ui/core';
 
 type chordViewerProp = {instrumentId: string, instrumentName: string, mainKey: string, suffix: string}
 
@@ -28,6 +29,8 @@ function chordQueryBuilder(instrumentId: string, key: string, suffix: string) {
 }
 
 const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName, mainKey, suffix } ) => {
+  const theme = useTheme();
+  console.log(theme)
   console.log(instrumentId, mainKey, suffix);
   const { error, data, loading } = useQuery(chordQueryBuilder(instrumentId, mainKey, suffix));
   const service = useChordService('ukulele')//instrumentId);
@@ -45,12 +48,12 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
       suffix: data.chordFromName.suffix
     }
     if (instrumentName === 'piano') {
-      svg = renderPianoSvg(chord, 'dark');
+      svg = renderPianoSvg(chord, theme.palette.type);
       console.log(svg)
     } else if(instrumentName === 'guitar') {
-      svgGuitar = getGuitarUkuleleSvg(chord, instrumentName);
+      svgGuitar = getGuitarUkuleleSvg(chord, instrumentName, theme.palette.type);
     } else if (instrumentName === 'ukulele') {
-      svgUkulele = getGuitarUkuleleSvg(chord, instrumentName);
+      svgUkulele = getGuitarUkuleleSvg(chord, instrumentName, theme.palette.type);
     }
   }
 

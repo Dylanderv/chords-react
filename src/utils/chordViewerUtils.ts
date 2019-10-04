@@ -103,7 +103,19 @@ export function renderPianoSvg(chord: IPianoChord, theme: 'light'|'dark') {
   return Serializer.serializeToString(piano);
 }
 
-export function getGuitarUkuleleSvg(chord, instrumentName: string) {
+export function getGuitarUkuleleSvg(chord, instrumentName: string, theme: 'light' | 'dark') {
+  let chordColor = {
+    defaultColor: '#666', // default color
+    // bgColor: '#FFF', // background color
+    // strokeColor: '#666', // stroke color (overrides defaultColor)
+    // textColor: '#666', // text color (overrides defaultColor)
+    // stringColor: '#666', // string color (overrides defaultColor)
+    // fretColor: '#666', // fret color (overrides defaultColor)
+    // labelColor: '#666', // label color (overrides defaultColor)
+  }
+  if (theme === 'dark') {
+    chordColor.defaultColor = '#ccc'
+  }
   let selector = document.createElement('svg');
   let data;
     if (chord !== undefined && chord.position && chord.position.length > 0) {
@@ -117,7 +129,8 @@ export function getGuitarUkuleleSvg(chord, instrumentName: string) {
       const test = new ChordBox(selector, {
         numStrings: instrumentName === 'guitar' ? 6 : 4,
         width: SVG_SIZE.width,
-        height: SVG_SIZE.height
+        height: SVG_SIZE.height,
+        ...chordColor
       });
       test.draw({
         chord: data.chords,
