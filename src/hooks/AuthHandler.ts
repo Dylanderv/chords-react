@@ -1,11 +1,17 @@
 import React from 'react';
-import { UserAuth } from '../model/UserAuth';
+import { UserAuth, InputUserAuth } from '../model/UserAuth';
 import { DEFAULT_USER_AUTH } from '../utils/consts';
+import { getDatePlusOneHour } from '../utils/authUtils';
 
 const useAuthHandler = (initialState: UserAuth) => {
   const [auth, setAuth] = React.useState(initialState);
 
-  const setAuthStatus = (userAuth: UserAuth) => {
+  const setAuthStatus = (inputUserAuth: InputUserAuth) => {
+    // TODO: Add cookie time (1h)
+    let userAuth: UserAuth = {
+      expire: getDatePlusOneHour(),
+      ...inputUserAuth
+    }
     window.localStorage.setItem("UserAuth", JSON.stringify(userAuth));
     setAuth(userAuth);
   };

@@ -1,12 +1,12 @@
 import React from 'react';
-import { UserAuth } from '../model/UserAuth';
+import { UserAuth, InputUserAuth } from '../model/UserAuth';
 import { DEFAULT_USER_AUTH } from '../utils/consts';
 import useAuthHandler from '../hooks/AuthHandler';
 import { getStoredUserAuth } from '../utils/authUtils';
 
 export interface IAuthContextInterface {
   auth: UserAuth;
-  setAuthStatus: (userAuth: UserAuth) => void;
+  setAuthStatus: (inputUserAuth: InputUserAuth) => void;
   setUnauthStatus: () => void;
 }
 
