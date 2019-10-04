@@ -56,15 +56,17 @@ const INSTRUMENT_QUERY = gql`
   }
 `;
 
-const InstrumentSelector: React.FC = () => {
+type instrumentSelectorProp = { noViewer: boolean }
+
+const InstrumentSelector: React.FC<instrumentSelectorProp> = ({ noViewer }) => {
   const { loading, error, data } = useQuery(INSTRUMENT_QUERY);
   const { history, match } = useReactRouter() as RouteComponentProps<TParams, StaticContext, any>;
   const classes = useStyles();
 
   let instrumentParam: InstrumentType
-  if (match.params.instrument !== undefined) {
+  if (match.params.instrument !== undefined && noViewer === false) {
     instrumentParam = match.params.instrument as InstrumentType;
-  } else {
+  } else if (noViewer === false) {
     instrumentParam = 'ukulele';
   }
 
@@ -77,6 +79,8 @@ const InstrumentSelector: React.FC = () => {
     let instrumentName = dataToDisplay.map(instrument => instrument.name);
     setRouteInfos({ ...routeInfos, [instrumentName[value] as InstrumentType]: history.location.pathname });
     setValue(newValue);
+    console.log(value)
+    if (noViewer) return
     let newHistory = '';
     if (routeInfos[instrumentName[newValue]] && routeInfos[instrumentName[newValue]] !== null ) {
       newHistory = routeInfos[instrumentName[newValue]];
@@ -86,8 +90,10 @@ const InstrumentSelector: React.FC = () => {
 
   if (loading === false && error === undefined) {
     dataToDisplay = data.instruments;
-    let index = dataToDisplay.findIndex(elem => elem.name === instrumentParam);
-    if (value !== index) setValue(index === -1 ? 0 : index)
+    if (noViewer === false) {
+      let index = dataToDisplay.findIndex(elem => elem.name === instrumentParam);
+      if (value !== index) setValue(index === -1 ? 0 : index)
+    }
   }
 
   return (
@@ -100,7 +106,7 @@ const InstrumentSelector: React.FC = () => {
           </Tabs>
           {dataToDisplay.map((instrument, index) => 
             <TabPanel key={instrument.id} index={index} value={value}>
-              <ChordSelector instrumentId={instrument.id} instrumentName={instrument.name}></ChordSelector>
+              <ChordSelector noViewer={noViewer} instrumentId={instrument.id} instrumentName={instrument.name}></ChordSelector>
             </TabPanel>
           )}
         </div>

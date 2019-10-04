@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
 type chordSelectorProps = {
   instrumentId: string;
   instrumentName: InstrumentType;
+  noViewer: boolean
 };
 
 function chordForInstrumentQueryBuilder(instrumentId: string) {
@@ -46,7 +47,7 @@ function chordForInstrumentQueryBuilder(instrumentId: string) {
   `
 }
 
-const ChordSelector: React.FC<chordSelectorProps> = ({ instrumentId, instrumentName }) => {
+const ChordSelector: React.FC<chordSelectorProps> = ({ instrumentId, instrumentName, noViewer }) => {
   const { error, loading, data } = useQuery(chordForInstrumentQueryBuilder(instrumentId));
   // const service = useChordService((instrumentId + 'ChordName') as 'guitarChordName' | 'ukuleleChordName' | 'pianoChordName') as Service<IPayloadChordName>;
   const router = useReactRouter() as RouteComponentProps<TParams, StaticContext, any>;
@@ -66,6 +67,7 @@ const ChordSelector: React.FC<chordSelectorProps> = ({ instrumentId, instrumentN
       ...oldValues,
       [event.target.name as string]: event.target.value,
     }));
+    if (noViewer) return
     console.log(values)
     let pathToGo = [
       CHORD_VIEWER_BASE_ROUTE,
@@ -105,7 +107,7 @@ const ChordSelector: React.FC<chordSelectorProps> = ({ instrumentId, instrumentN
               </Select>
             </FormControl>
           </Grid>
-          {values.key !== '' && values.suffix !== '' && values.key !== undefined ? 
+          {noViewer === false && values.key !== '' && values.suffix !== '' && values.key !== undefined ? 
             <Grid item xs={12}>
               <ChordViewer instrumentId={instrumentId} instrumentName={instrumentName} mainKey={values.key} suffix={values.suffix}></ChordViewer>
             </Grid> 

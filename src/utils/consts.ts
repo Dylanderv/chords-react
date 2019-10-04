@@ -6,3 +6,4 @@ export const DEFAULT_USER_AUTH: UserAuth = {id: 0, username: '', expire: new Dat
 export const DEFAULT_NOTIFICATION: Notification = {message: undefined, type: 'info'};
 
 export const ENDPOINT = 'http://localhost:3333/';
+

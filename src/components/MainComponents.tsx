@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import { CHORD_VIEWER_BASE_ROUTE } from '../utils/routerUtils';
+import { CHORD_VIEWER_BASE_ROUTE, PARTITION_LIST_BASE_ROUTE, NEW_PARTITION_BASE_ROUTE } from '../utils/routerUtils';
 import InstrumentSelector from './selector/InstrumentSelector';
 import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Theme, createStyles, ButtonGroup, Snackbar, Drawer, ListItem, List, ListItemIcon, ListItemText } from '@material-ui/core';
 import Login, { handleLogOutButtonClick } from './Login';
@@ -12,6 +12,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
+import { PartitionList } from './partitions/PartitionList';
+import { NewPartitionEditor } from './partitions/NewPartitionEditor';
 
 // Use context https://medium.com/hackernoon/learn-react-hooks-by-building-an-auth-based-to-do-app-c2d143928b0b
 
@@ -96,6 +98,7 @@ const MainComponent: React.FC<mainComponentProps> = ({ onToggleDark }) => {
             </Typography>
             <ButtonGroup aria-label="outlined button group">
               <Button component={Link} to={CHORD_VIEWER_BASE_ROUTE} color="inherit">Chord</Button>
+              <Button component={Link} to={PARTITION_LIST_BASE_ROUTE} color="inherit">Paritions</Button>
               {auth.auth.id === 0 ? 
                 <Button component={Link} to='/login' color="inherit">Login</Button>
                 :
@@ -120,7 +123,9 @@ const MainComponent: React.FC<mainComponentProps> = ({ onToggleDark }) => {
           </div>
         </Drawer>
         
-        <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument?/:key?/:suffix?"} component={InstrumentSelector}/>
+        <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument?/:key?/:suffix?"} render={() => <InstrumentSelector noViewer={false}></InstrumentSelector>}/>
+        <Route exact path={PARTITION_LIST_BASE_ROUTE} component={PartitionList}/>
+        <Route exact path={PARTITION_LIST_BASE_ROUTE + '/new'} component={NewPartitionEditor}/>
         <Route path={'/login'} component={Login}/>
       </Router>
     </div>
