@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import useChordService from '../../hooks/useChordService';
 import { renderPianoSvg, getGuitarUkuleleSvg } from '../../utils/chordViewerUtils';
 import { IPianoChords } from '../../model/piano/IPianoChords';
@@ -8,7 +8,8 @@ import { IUkuleleChords } from '../../model/ukulele/IUkuleleChords';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { TParams } from '../selector/ChordSelector';
-import { useTheme } from '@material-ui/core';
+import { useTheme, Button, Grid } from '@material-ui/core';
+import { authContext } from '../../contexts/AuthContext';
 
 type chordViewerProp = {instrumentId: string, instrumentName: string, mainKey: string, suffix: string}
 
@@ -30,11 +31,9 @@ function chordQueryBuilder(instrumentId: string, key: string, suffix: string) {
 
 const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName, mainKey, suffix } ) => {
   const theme = useTheme();
-  console.log(theme)
-  console.log(instrumentId, mainKey, suffix);
   const { error, data, loading } = useQuery(chordQueryBuilder(instrumentId, mainKey, suffix));
   const service = useChordService('ukulele')//instrumentId);
-
+  const auth = useContext(authContext);
   let svg = '';
   let svgGuitar;
   let svgUkulele;
@@ -49,12 +48,15 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
     }
     if (instrumentName === 'piano') {
       svg = renderPianoSvg(chord, theme.palette.type);
-      console.log(svg)
     } else if(instrumentName === 'guitar') {
       svgGuitar = getGuitarUkuleleSvg(chord, instrumentName, theme.palette.type);
     } else if (instrumentName === 'ukulele') {
       svgUkulele = getGuitarUkuleleSvg(chord, instrumentName, theme.palette.type);
     }
+  }
+
+  const handleButtonClick = () => {
+    
   }
 
   return (
@@ -63,13 +65,43 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
         {service.status === 'loaded' && (
         <div>
           {instrumentName === 'piano' && svg !== '' ? 
-            <svg width="90vw" dangerouslySetInnerHTML={{__html: svg}}></svg> : <div></div>
+            <Grid container spacing={0} direction="column" alignItems="center">
+              <Grid item xs={12}>
+                <svg width="90vw" dangerouslySetInnerHTML={{__html: svg}}></svg>
+              </Grid>
+              {auth.auth.id !== 0 ? 
+                <Grid item xs={12}>
+                  <Button onClick={handleButtonClick}>Salut</Button>
+                </Grid>
+                : null
+              }
+            </Grid> : <div></div>
           }
           {(instrumentName === 'guitar') && svgGuitar !== undefined ? 
-            <svg width={SVG_SIZE.width} height={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svgGuitar.outerHTML}}></svg> : <div></div>
+            <Grid container spacing={0} direction="column" alignItems="center">
+              <Grid item xs={12}>
+                <svg width={SVG_SIZE.width} height={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svgGuitar.outerHTML}}></svg>
+              </Grid>
+              {auth.auth.id !== 0 ? 
+                <Grid item xs={12}>
+                  <Button onClick={handleButtonClick}>Salut</Button>
+                </Grid>
+                : null
+              }
+            </Grid> : <div></div>
           }
           {(instrumentName === 'ukulele') && svgUkulele !== undefined ? 
-            <svg width={SVG_SIZE.width} height={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svgUkulele.outerHTML}}></svg> : <div></div>
+            <Grid container spacing={0} direction="column" alignItems="center">
+              <Grid item xs={12}>
+                <svg width={SVG_SIZE.width} height={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svgUkulele.outerHTML}}></svg>
+              </Grid>
+              {auth.auth.id !== 0 ? 
+                <Grid item xs={12}>
+                  <Button onClick={handleButtonClick}>Salut</Button>
+                </Grid>
+                : null
+              }
+            </Grid> : <div></div>
           }
         </div>
         )}

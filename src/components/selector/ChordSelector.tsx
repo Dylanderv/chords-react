@@ -68,7 +68,6 @@ const ChordSelector: React.FC<chordSelectorProps> = ({ instrumentId, instrumentN
       [event.target.name as string]: event.target.value,
     }));
     if (noViewer) return
-    console.log(values)
     let pathToGo = [
       CHORD_VIEWER_BASE_ROUTE,
       instrumentName,

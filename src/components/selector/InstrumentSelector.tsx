@@ -79,7 +79,6 @@ const InstrumentSelector: React.FC<instrumentSelectorProp> = ({ noViewer }) => {
     let instrumentName = dataToDisplay.map(instrument => instrument.name);
     setRouteInfos({ ...routeInfos, [instrumentName[value] as InstrumentType]: history.location.pathname });
     setValue(newValue);
-    console.log(value)
     if (noViewer) return
     let newHistory = '';
     if (routeInfos[instrumentName[newValue]] && routeInfos[instrumentName[newValue]] !== null ) {
