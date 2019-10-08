@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import { CHORD_VIEWER_BASE_ROUTE, PARTITION_LIST_BASE_ROUTE, NEW_PARTITION_BASE_ROUTE } from '../utils/routerUtils';
+import { CHORD_VIEWER_BASE_ROUTE, PARTITION_LIST_BASE_ROUTE, NEW_PARTITION_BASE_ROUTE, PARTITION_EDITOR_BASE_ROUTE, PARTITION_BASE_ROUTE } from '../utils/routerUtils';
 import InstrumentSelector from './selector/InstrumentSelector';
 import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Theme, createStyles, ButtonGroup, Snackbar, Drawer, ListItem, List, ListItemIcon, ListItemText } from '@material-ui/core';
 import Login, { handleLogOutButtonClick } from './Login';
@@ -14,6 +14,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import { PartitionList } from './partitions/PartitionList';
 import { NewPartitionEditor } from './partitions/NewPartitionEditor';
+import PartitionViewer from './partitions/PartitionViewer';
 
 // Use context https://medium.com/hackernoon/learn-react-hooks-by-building-an-auth-based-to-do-app-c2d143928b0b
 
@@ -125,7 +126,8 @@ const MainComponent: React.FC<mainComponentProps> = ({ onToggleDark }) => {
         
         <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument?/:key?/:suffix?"} render={() => <InstrumentSelector noViewer={false}></InstrumentSelector>}/>
         <Route exact path={PARTITION_LIST_BASE_ROUTE} component={PartitionList}/>
-        <Route exact path={PARTITION_LIST_BASE_ROUTE + '/new'} component={NewPartitionEditor}/>
+        <Route exact path={PARTITION_EDITOR_BASE_ROUTE + '/new'} component={NewPartitionEditor}/>
+        <Route exact path={PARTITION_BASE_ROUTE + '/:partitionId'} component={PartitionViewer}/>
         <Route path={'/login'} component={Login}/>
       </Router>
     </div>

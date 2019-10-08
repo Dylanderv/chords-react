@@ -30,16 +30,15 @@ function chordQueryBuilder(instrumentId: string, key: string, suffix: string) {
 
 const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName, mainKey, suffix } ) => {
   const theme = useTheme();
-  console.log(theme)
-  console.log(instrumentId, mainKey, suffix);
   const { error, data, loading } = useQuery(chordQueryBuilder(instrumentId, mainKey, suffix));
-  const service = useChordService('ukulele')//instrumentId);
 
   let svg = '';
   let svgGuitar;
   let svgUkulele;
   if (loading === false && error === undefined && data.chordFromName) {
     // Récupérer les données à afficher dans le selector
+    console.log(data);
+    console.log(instrumentName)
     let chord = {
       id: data.chordFromName.id,
       info: data.chordFromName.info,
@@ -49,7 +48,6 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
     }
     if (instrumentName === 'piano') {
       svg = renderPianoSvg(chord, theme.palette.type);
-      console.log(svg)
     } else if(instrumentName === 'guitar') {
       svgGuitar = getGuitarUkuleleSvg(chord, instrumentName, theme.palette.type);
     } else if (instrumentName === 'ukulele') {
@@ -59,11 +57,11 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
 
   return (
       <div>
-        {service.status === 'loading' && <div>Loading...</div>}
-        {service.status === 'loaded' && (
+        {loading === true && <div>Loading...</div>}
+        {loading === false && error === undefined && (
         <div>
           {instrumentName === 'piano' && svg !== '' ? 
-            <svg width="90vw" dangerouslySetInnerHTML={{__html: svg}}></svg> : <div></div>
+            <svg width={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svg}}></svg> : <div></div>
           }
           {(instrumentName === 'guitar') && svgGuitar !== undefined ? 
             <svg width={SVG_SIZE.width} height={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svgGuitar.outerHTML}}></svg> : <div></div>
@@ -73,7 +71,7 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
           }
         </div>
         )}
-        {service.status === 'error' && (
+        {error !== undefined && (
           <div>Error, the backend moved to the dark side.</div>
         )}
       </div>
