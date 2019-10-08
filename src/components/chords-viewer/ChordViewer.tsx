@@ -32,13 +32,15 @@ function chordQueryBuilder(instrumentId: string, key: string, suffix: string) {
 const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName, mainKey, suffix } ) => {
   const theme = useTheme();
   const { error, data, loading } = useQuery(chordQueryBuilder(instrumentId, mainKey, suffix));
-  const service = useChordService('ukulele')//instrumentId);
+  // const service = useChordService('ukulele')//instrumentId);
   const auth = useContext(authContext);
   let svg = '';
   let svgGuitar;
   let svgUkulele;
   if (loading === false && error === undefined && data.chordFromName) {
     // Récupérer les données à afficher dans le selector
+    console.log(data);
+    console.log(instrumentName)
     let chord = {
       id: data.chordFromName.id,
       info: data.chordFromName.info,
@@ -61,13 +63,13 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
 
   return (
       <div>
-        {service.status === 'loading' && <div>Loading...</div>}
-        {service.status === 'loaded' && (
+        {loading === true && <div>Loading...</div>}
+        {loading === false && error === undefined && (
         <div>
           {instrumentName === 'piano' && svg !== '' ? 
             <Grid container spacing={0} direction="column" alignItems="center">
               <Grid item xs={12}>
-                <svg width="90vw" dangerouslySetInnerHTML={{__html: svg}}></svg>
+                <svg width={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svg}}></svg>
               </Grid>
               {auth.auth.id !== 0 ? 
                 <Grid item xs={12}>
@@ -105,7 +107,7 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
           }
         </div>
         )}
-        {service.status === 'error' && (
+        {error !== undefined && (
           <div>Error, the backend moved to the dark side.</div>
         )}
       </div>
