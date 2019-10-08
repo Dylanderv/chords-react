@@ -8,10 +8,6 @@ export const getStoredUserAuth = (): UserAuth => {
   if (jsonAuth) {
     let auth = JSON.parse(jsonAuth);
     auth.expire = new Date(auth.expire)
-    console.log(auth);
-    console.log(auth.expire.valueOf());
-    console.log(Date.now())
-    console.log(auth.expire.valueOf() - Date.now())
     if (auth.expire.valueOf() > Date.now()) {
       return auth;
     }

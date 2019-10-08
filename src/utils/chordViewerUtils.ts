@@ -1,10 +1,6 @@
 import PianoSVG from '../svg/PianoKeyboard';
 import { IPianoChord, blackKeys } from '../model/piano/IPianoChord';
 import { SVG_SIZE } from '../components/chords-viewer/ChordViewer';
-import { InstrumentType } from '../model/InstrumentType';
-import { IGuitarChords } from '../model/guitar/IGuitarChords';
-import { IUkuleleChords } from '../model/ukulele/IUkuleleChords';
-import { IChordDBChords } from '../model/IChordDBChords';
 import { ChordBox } from 'vexchords'
 
 const Serializer = new XMLSerializer();

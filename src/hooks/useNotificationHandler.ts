@@ -20,7 +20,6 @@ const useNotificationHandler = () => {
   };
 
   const closeNotification = () => {
-    console.log(timeout);
     if (timeout !== -1) {
       clearTimeout(timeout);
       setTimeout(-1);

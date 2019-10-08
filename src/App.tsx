@@ -8,10 +8,10 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost';
 import { ENDPOINT } from './utils/consts';
 import { createMuiTheme, MuiThemeProvider, CssBaseline } from '@material-ui/core';
-import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 
 export const client  = new ApolloClient({
-  uri: ENDPOINT + 'graphql'
+  uri: ENDPOINT + 'graphql',
+  credentials: 'include'
 })
 
 

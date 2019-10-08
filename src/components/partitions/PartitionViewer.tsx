@@ -4,8 +4,7 @@ import gql from 'graphql-tag';
 import { useReactRouter } from '../../hooks/useReactRouter';
 import { StaticContext, RouteComponentProps } from 'react-router';
 import ChordViewer from '../chords-viewer/ChordViewer';
-import ChordSelector from '../selector/ChordSelector';
-import { Tooltip, withStyles, Theme, Button, Typography } from '@material-ui/core';
+import { Tooltip, withStyles, Theme } from '@material-ui/core';
 
 function partitionQueryGetter(partitionId: string) {
   return gql`
@@ -21,13 +20,13 @@ function partitionQueryGetter(partitionId: string) {
           key
           suffix
           position
-          instrument {
-            id
-            name
-          }
         }
         owner {
           username
+        }
+        instrument {
+          id
+          name
         }
       }
     }
@@ -45,20 +44,18 @@ const NoBackgroundTooltip = withStyles((theme: Theme) => ({
 const PartitionViewer: React.FC = () => {
   const { match } = useReactRouter() as RouteComponentProps<TParams, StaticContext, any>
   const { data, loading, error } = useQuery(partitionQueryGetter(match.params.partitionId));
-  if (loading === false && error === undefined) {
-    console.log(data);
-  }
+  
   return (
     <div>
         {loading === true && <div>Loading...</div>}
         {loading === false && error === undefined && data !== undefined && (
         <div>
           {data.partition.chords.map(chord => 
-          <div>
+          <div key={chord.id}>
             <NoBackgroundTooltip placement="right-start"
               title={
-                <ChordViewer key={chord.id}
-                  instrumentId={chord.instrument.id} instrumentName={chord.instrument.name} mainKey={chord.key} suffix={chord.suffix}
+                <ChordViewer key={chord.id} isInPartition={true}
+                  instrumentId={data.partition.instrument.id} instrumentName={data.partition.instrument.name} mainKey={chord.key} suffix={chord.suffix}
                 ></ChordViewer>
               }
             >

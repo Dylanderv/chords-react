@@ -17,8 +17,17 @@ export default interface Partition {
     key: string;
     suffix: string;
     position: string;
-    instrument: {
-      name: string;
-    }
+  };
+  instrument: {
+    id: string;
+    name: string;
+    infos: string;
+    keys: string[];
+    suffixes: string[];
+    chords: {
+      key: string;
+      suffix: string;
+      position: string;
+    };
   }
 }

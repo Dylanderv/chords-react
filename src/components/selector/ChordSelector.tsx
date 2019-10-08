@@ -2,11 +2,8 @@ import React from 'react';
 import { createStyles, Theme, FormControl, InputLabel, Select, MenuItem, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { InstrumentType } from '../../model/InstrumentType';
-import useChordService from '../../hooks/useChordService';
-import { Service } from '../../model/Service';
-import { IPayloadChordName } from '../../model/IPayloadChordInstrumentList';
 import ChordViewer from '../chords-viewer/ChordViewer';
-import { Router, Route, RouteComponentProps, StaticContext } from 'react-router';
+import { RouteComponentProps, StaticContext } from 'react-router';
 import { CHORD_VIEWER_BASE_ROUTE } from '../../utils/routerUtils';
 import { useReactRouter } from '../../hooks/useReactRouter';
 import gql from 'graphql-tag';
@@ -108,7 +105,7 @@ const ChordSelector: React.FC<chordSelectorProps> = ({ instrumentId, instrumentN
           </Grid>
           {noViewer === false && values.key !== '' && values.suffix !== '' && values.key !== undefined ? 
             <Grid item xs={12}>
-              <ChordViewer instrumentId={instrumentId} instrumentName={instrumentName} mainKey={values.key} suffix={values.suffix}></ChordViewer>
+              <ChordViewer isInPartition={false} instrumentId={instrumentId} instrumentName={instrumentName} mainKey={values.key} suffix={values.suffix}></ChordViewer>
             </Grid> 
             : <div></div>
           }

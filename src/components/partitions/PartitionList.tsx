@@ -1,11 +1,11 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import { Fab, Theme, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, Grid } from '@material-ui/core';
+import { Fab, Theme, Card, CardActionArea, CardContent, Typography, Grid } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/styles';
 import AddIcon from '@material-ui/icons/Add';
-import { NEW_PARTITION_BASE_ROUTE, PARTITION_LIST_BASE_ROUTE, PARTITION_EDITOR_BASE_ROUTE, PARTITION_BASE_ROUTE } from '../../utils/routerUtils';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { PARTITION_EDITOR_BASE_ROUTE, PARTITION_BASE_ROUTE } from '../../utils/routerUtils';
+import { Link } from 'react-router-dom';
 import { useReactRouter } from '../../hooks/useReactRouter';
 import Partition from '../../model/Partition';
 
@@ -17,10 +17,8 @@ const PARTITIONS_QUERY = gql`
       owner {
         username
       }
-      chords {
-        instrument {
-          name
-        }
+      instrument {
+        name
       }
     }
   }
@@ -47,9 +45,6 @@ export const PartitionList: React.FC = () => {
   const classes = useStyles();
   const { history } = useReactRouter();
 
-  if (loading === false && error === undefined && data !== undefined) {
-    console.log(data);
-  }
 
   const handleClickPartition = (partitionId: string) => {
     history.replace(PARTITION_BASE_ROUTE + '/' + partitionId);
@@ -67,7 +62,7 @@ export const PartitionList: React.FC = () => {
         </div>
         )}
         {error !== undefined && (
-          <div>Error, the backend moved to the dark side.</div>
+          <div>Error, the backend moved to the dark side. {error}</div>
         )}
       </div>
   )
@@ -82,7 +77,7 @@ function getCardFromPartition(partition: Partition) {
             {partition.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {partition.chords[0] ? partition.chords[0].instrument.name : "Partition vide"}
+            {partition.instrument ? partition.instrument.name : "Partition vide"}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             Créée par : {partition.owner.username}

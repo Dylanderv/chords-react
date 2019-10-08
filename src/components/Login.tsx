@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Paper, createStyles, Theme, SnackbarContent, IconButton, Snackbar } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import { makeStyles } from '@material-ui/styles';
+import { TextField, Button, Grid, Paper } from '@material-ui/core';
 import { authenticate, register, isAuth, logOut } from '../services/loginService';
-import { red, green } from '@material-ui/core/colors';
 import { authContext, IAuthContextInterface } from '../contexts/AuthContext';
-import useNotificationHandler from '../hooks/useNotificationHandler';
 import { UserAuth } from '../model/UserAuth';
 import { useReactRouter } from '../hooks/useReactRouter';
 import { notificationContext, INotificationContextInterface } from '../contexts/NotificationContext';
@@ -22,23 +18,7 @@ const ERROR_OTHER_ISAUTH = 'Erreur serveur inconnue'
 const ERROR_401_LOGOUT = `Vous n'êtes pas connecté`
 const ERROR_OTHER_LOGOUT = 'Erreur serveur inconnue'
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    error: {
-      backgroundColor: red[700]
-    },
-    success: {
-      backgroundColor: green[700]
-    },
-    message: {
-      display: 'flex',
-      alignItems: 'center',
-    },
-  })
-)
-
 const Login: React.FC = () => {
-  const classes = useStyles();
   const { history } = useReactRouter();
   const auth = React.useContext(authContext);
   const [usernameInput, setUsernameInput] = useState('');

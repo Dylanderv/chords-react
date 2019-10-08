@@ -1,5 +1,4 @@
 import React from 'react';
-import useChordService from '../../hooks/useChordService';
 import { Tab, Tabs, Theme, Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { InstrumentType } from '../../model/InstrumentType';

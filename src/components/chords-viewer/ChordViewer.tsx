@@ -1,17 +1,12 @@
 import React, { useContext } from 'react';
-import useChordService from '../../hooks/useChordService';
 import { renderPianoSvg, getGuitarUkuleleSvg } from '../../utils/chordViewerUtils';
-import { IPianoChords } from '../../model/piano/IPianoChords';
-import { IPianoChord } from '../../model/piano/IPianoChord';
-import { IGuitarChords } from '../../model/guitar/IGuitarChords';
-import { IUkuleleChords } from '../../model/ukulele/IUkuleleChords';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import { TParams } from '../selector/ChordSelector';
-import { useTheme, Button, Grid } from '@material-ui/core';
+import { useTheme, Grid } from '@material-ui/core';
 import { authContext } from '../../contexts/AuthContext';
+import AddToPartitionButton from './AddToPartitionButton';
 
-type chordViewerProp = {instrumentId: string, instrumentName: string, mainKey: string, suffix: string}
+type chordViewerProp = {instrumentId: string, instrumentName: string, mainKey: string, suffix: string, isInPartition:boolean }
 
 export const SVG_SIZE: {width: number, height: number} = { width: 250, height: 400 }
 
@@ -29,7 +24,7 @@ function chordQueryBuilder(instrumentId: string, key: string, suffix: string) {
   `
 }
 
-const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName, mainKey, suffix } ) => {
+const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName, mainKey, suffix, isInPartition } ) => {
   const theme = useTheme();
   const { error, data, loading } = useQuery(chordQueryBuilder(instrumentId, mainKey, suffix));
   // const service = useChordService('ukulele')//instrumentId);
@@ -39,8 +34,6 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
   let svgUkulele;
   if (loading === false && error === undefined && data.chordFromName) {
     // Récupérer les données à afficher dans le selector
-    console.log(data);
-    console.log(instrumentName)
     let chord = {
       id: data.chordFromName.id,
       info: data.chordFromName.info,
@@ -57,10 +50,6 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
     }
   }
 
-  const handleButtonClick = () => {
-    
-  }
-
   return (
       <div>
         {loading === true && <div>Loading...</div>}
@@ -71,9 +60,9 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
               <Grid item xs={12}>
                 <svg width={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svg}}></svg>
               </Grid>
-              {auth.auth.id !== 0 ? 
+              {auth.auth.id !== '0' && !isInPartition ? 
                 <Grid item xs={12}>
-                  <Button onClick={handleButtonClick}>Salut</Button>
+                  <AddToPartitionButton userId={auth.auth.id} chordId={data.chordFromName.id} instrumentId={instrumentId}></AddToPartitionButton>
                 </Grid>
                 : null
               }
@@ -84,9 +73,9 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
               <Grid item xs={12}>
                 <svg width={SVG_SIZE.width} height={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svgGuitar.outerHTML}}></svg>
               </Grid>
-              {auth.auth.id !== 0 ? 
+              {auth.auth.id !== '0' && !isInPartition ? 
                 <Grid item xs={12}>
-                  <Button onClick={handleButtonClick}>Salut</Button>
+                  <AddToPartitionButton userId={auth.auth.id} chordId={data.chordFromName.id} instrumentId={instrumentId}></AddToPartitionButton>
                 </Grid>
                 : null
               }
@@ -97,9 +86,9 @@ const ChordViewer: React.FC<chordViewerProp> = ( { instrumentId, instrumentName,
               <Grid item xs={12}>
                 <svg width={SVG_SIZE.width} height={SVG_SIZE.height} dangerouslySetInnerHTML={{__html: svgUkulele.outerHTML}}></svg>
               </Grid>
-              {auth.auth.id !== 0 ? 
+              {auth.auth.id !== '0' && !isInPartition ? 
                 <Grid item xs={12}>
-                  <Button onClick={handleButtonClick}>Salut</Button>
+                  <AddToPartitionButton userId={auth.auth.id} chordId={data.chordFromName.id} instrumentId={instrumentId}></AddToPartitionButton>
                 </Grid>
                 : null
               }

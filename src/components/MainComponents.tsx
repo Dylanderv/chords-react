@@ -1,16 +1,13 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import { CHORD_VIEWER_BASE_ROUTE, PARTITION_LIST_BASE_ROUTE, NEW_PARTITION_BASE_ROUTE, PARTITION_EDITOR_BASE_ROUTE, PARTITION_BASE_ROUTE } from '../utils/routerUtils';
+import { CHORD_VIEWER_BASE_ROUTE, PARTITION_LIST_BASE_ROUTE, PARTITION_EDITOR_BASE_ROUTE, PARTITION_BASE_ROUTE } from '../utils/routerUtils';
 import InstrumentSelector from './selector/InstrumentSelector';
 import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Theme, createStyles, ButtonGroup, Snackbar, Drawer, ListItem, List, ListItemIcon, ListItemText } from '@material-ui/core';
 import Login, { handleLogOutButtonClick } from './Login';
 import { authContext } from '../contexts/AuthContext';
-import MySnackbarContentWrapper, { NotificationType } from './MySnackbarContentWrapper';
-import useNotificationHandler from '../hooks/useNotificationHandler';
+import MySnackbarContentWrapper from './MySnackbarContentWrapper';
 import { notificationContext } from '../contexts/NotificationContext';
 import MenuIcon from '@material-ui/icons/Menu';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import { PartitionList } from './partitions/PartitionList';
 import { NewPartitionEditor } from './partitions/NewPartitionEditor';
@@ -100,7 +97,7 @@ const MainComponent: React.FC<mainComponentProps> = ({ onToggleDark }) => {
             <ButtonGroup aria-label="outlined button group">
               <Button component={Link} to={CHORD_VIEWER_BASE_ROUTE} color="inherit">Chord</Button>
               <Button component={Link} to={PARTITION_LIST_BASE_ROUTE} color="inherit">Paritions</Button>
-              {auth.auth.id === 0 ? 
+              {auth.auth.id === '0' ? 
                 <Button component={Link} to='/login' color="inherit">Login</Button>
                 :
                 <Button onClick={async () => await handleLogOutButtonClick(notificationHandler, auth)} color="inherit">Logout</Button>

@@ -1,10 +1,10 @@
 export type UserAuth = {
-  id: number;
+  id: string;
   username: string;
   expire: Date;
 }
 
 export type InputUserAuth = {
-  id: number;
+  id: string;
   username: string;
 }

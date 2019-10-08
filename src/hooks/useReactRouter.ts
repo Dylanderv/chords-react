@@ -7,6 +7,7 @@ export function useReactRouter(): RouteComponentProps<{}, StaticContext, any> {
   const routerContext = useContext(__RouterContext);
   useEffect(
     () => routerContext.history.listen(forceUpdate),
+    // eslint-disable-next-line
     [ routerContext ]
   );
   return routerContext;

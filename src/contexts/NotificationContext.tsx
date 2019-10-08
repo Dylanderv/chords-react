@@ -1,8 +1,5 @@
 import React from 'react';
-import { UserAuth } from '../model/UserAuth';
 import { DEFAULT_NOTIFICATION } from '../utils/consts';
-import useAuthHandler from '../hooks/AuthHandler';
-import { getStoredUserAuth } from '../utils/authUtils';
 import { Notification } from '../model/Notification';
 import { NotificationType } from '../components/MySnackbarContentWrapper';
 import useNotificationHandler from '../hooks/useNotificationHandler';
