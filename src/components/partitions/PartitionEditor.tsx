@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { useReactRouter } from '../../hooks/useReactRouter';
@@ -10,6 +10,7 @@ import { notificationContext } from '../../contexts/NotificationContext';
 import { authContext } from '../../contexts/AuthContext';
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
 import { PARTITION_BASE_ROUTE } from '../../utils/routerUtils';
+import { ControlledEditor } from "@monaco-editor/react";
 
 const PARTITION_EDITOR_QUERY = (partitionId: string) =>  gql`
 {
@@ -80,8 +81,8 @@ const PartitionEditor: React.FC = () => {
     setPartitionContent(data.partition.content)
   }, [data])
 
-  const handleContentChange = (ev) => {
-    setPartitionContent(ev.target.value)
+  const handleContentChange = (ev, value) => {
+    setPartitionContent(value);
   }
 
   const handleClickButton = async () => {
@@ -160,7 +161,16 @@ const PartitionEditor: React.FC = () => {
               </List>
             </Grid>
             <Grid item>
-              <TextField defaultValue={data.partition.content} multiline onChange={handleContentChange}></TextField>
+              {/* <TextField defaultValue={data.partition.content} multiline onChange={handleContentChange}></TextField> */}
+              <ControlledEditor
+                language="markdown"
+                theme="light"
+                value={partitionContent}
+                options={{ selectOnLineNumbers: true }}
+                height="40vh"
+                width="50vw"
+                onChange={handleContentChange}
+              />
             </Grid>
             <Grid item>
               <Button onClick={() => handleClickButton()}>Enregister les modifications</Button>
