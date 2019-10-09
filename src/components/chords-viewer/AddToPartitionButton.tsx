@@ -20,11 +20,12 @@ const addToPartitionButtonQuery = (userId, instrumentId) => gql`
     owner {
       id
     }
+    content
   }
 }
 `
 
-export type PartitionInput = { name: string, chords: string[], ownerId: string, instrumentId: string };
+export type PartitionInput = { name: string, chords: string[], ownerId: string, instrumentId: string, content: string };
 
 // const addToPartitionMutation = (partitionId: string, partitionInput: PartitionInput) => gql`
 // {
@@ -45,6 +46,7 @@ const MODIFY_PARTITION = gql`
       instrument {
         id
       }
+      content
     }
   }
 `;
@@ -70,7 +72,8 @@ const AddToPartitionButton: React.FC<addToPartitionButtonProps> = ({ userId, cho
       chords: partitionChords,
       instrumentId: partition.instrument.id,
       name: partition.name,
-      ownerId: userId
+      ownerId: userId,
+      content: partition.content
     }
     let res;
     try {
@@ -89,11 +92,19 @@ const AddToPartitionButton: React.FC<addToPartitionButtonProps> = ({ userId, cho
     <div>
       {loading === true && <div>Loading...</div>}
       {mutationLoading === true && <div>Ajout de l'accord en cours</div>}
-      {loading === false && error === undefined && mutationLoading === false && mutationError === undefined &&  (
+      {loading === false && error === undefined && mutationLoading === false 
+        && mutationError === undefined &&  
+      (
         <div>
           <Button onClick={handleClick}>Add to partition</Button>
           <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-            {data.partitionsFromUserForInstrument.map(partition => <MenuItem key={partition.id} onClick={() => handleClickPartition(partition)}>{partition.name}</MenuItem>)}
+            {data.partitionsFromUserForInstrument.map(partition => 
+              <div key={partition.id}>
+                {partition.chords.findIndex(chord => chord.id === chordId) === -1 &&
+                  <MenuItem onClick={() => handleClickPartition(partition)}>{partition.name}</MenuItem>
+                }
+              </div>
+            )}
             
           </Menu>
         </div>

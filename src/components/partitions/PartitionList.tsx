@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { Fab, Theme, Card, CardActionArea, CardContent, Typography, Grid } from '@material-ui/core';
@@ -8,6 +8,7 @@ import { PARTITION_EDITOR_BASE_ROUTE, PARTITION_BASE_ROUTE } from '../../utils/r
 import { Link } from 'react-router-dom';
 import { useReactRouter } from '../../hooks/useReactRouter';
 import Partition from '../../model/Partition';
+import { authContext } from '../../contexts/AuthContext';
 
 const PARTITIONS_QUERY = gql`
   {
@@ -15,9 +16,11 @@ const PARTITIONS_QUERY = gql`
       id
       name
       owner {
+        id
         username
       }
       instrument {
+        id
         name
       }
     }
@@ -44,10 +47,15 @@ export const PartitionList: React.FC = () => {
   const { data, error, loading } = useQuery<queryPartition>(PARTITIONS_QUERY);
   const classes = useStyles();
   const { history } = useReactRouter();
+  const auth = useContext(authContext);
 
 
   const handleClickPartition = (partitionId: string) => {
     history.replace(PARTITION_BASE_ROUTE + '/' + partitionId);
+  }
+
+  if (error !== undefined) {
+    console.log('PartitionList error', error);
   }
 
   return (
@@ -55,14 +63,16 @@ export const PartitionList: React.FC = () => {
         {loading === true && <div>Loading...</div>}
         {loading === false && error === undefined && data !== undefined && (
         <div>
-          <Grid container spacing={10} style={{ minHeight: '100vh', padding: 10 }}>
+          <Grid container spacing={1} style={{ padding: 10 }}>
             {data.partitions.map(partition => <Grid key={partition.id} item onClick={() => handleClickPartition(partition.id)}>{getCardFromPartition(partition)}</Grid>)}
           </Grid>
-          <Fab component={Link} to={PARTITION_EDITOR_BASE_ROUTE + '/new'} color='secondary' className={classes.fab}><AddIcon/></Fab>
+          {auth.auth.id !== '0' &&
+            <Fab component={Link} to={PARTITION_EDITOR_BASE_ROUTE + '/new'} color='secondary' className={classes.fab}><AddIcon/></Fab>
+          }
         </div>
         )}
         {error !== undefined && (
-          <div>Error, the backend moved to the dark side. {error}</div>
+          <div>Error, the backend moved to the dark side.</div>
         )}
       </div>
   )

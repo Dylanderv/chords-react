@@ -12,6 +12,7 @@ import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import { PartitionList } from './partitions/PartitionList';
 import { NewPartitionEditor } from './partitions/NewPartitionEditor';
 import PartitionViewer from './partitions/PartitionViewer';
+import PartitionEditor from './partitions/PartitionEditor';
 
 // Use context https://medium.com/hackernoon/learn-react-hooks-by-building-an-auth-based-to-do-app-c2d143928b0b
 
@@ -96,7 +97,7 @@ const MainComponent: React.FC<mainComponentProps> = ({ onToggleDark }) => {
             </Typography>
             <ButtonGroup aria-label="outlined button group">
               <Button component={Link} to={CHORD_VIEWER_BASE_ROUTE} color="inherit">Chord</Button>
-              <Button component={Link} to={PARTITION_LIST_BASE_ROUTE} color="inherit">Paritions</Button>
+              <Button component={Link} to={PARTITION_LIST_BASE_ROUTE} color="inherit">Partitions</Button>
               {auth.auth.id === '0' ? 
                 <Button component={Link} to='/login' color="inherit">Login</Button>
                 :
@@ -124,6 +125,7 @@ const MainComponent: React.FC<mainComponentProps> = ({ onToggleDark }) => {
         <Route path={CHORD_VIEWER_BASE_ROUTE + "/:instrument?/:key?/:suffix?"} render={() => <InstrumentSelector noViewer={false}></InstrumentSelector>}/>
         <Route exact path={PARTITION_LIST_BASE_ROUTE} component={PartitionList}/>
         <Route exact path={PARTITION_EDITOR_BASE_ROUTE + '/new'} component={NewPartitionEditor}/>
+        <Route exact path={PARTITION_EDITOR_BASE_ROUTE + '/:partitionId'} component={PartitionEditor}/>
         <Route exact path={PARTITION_BASE_ROUTE + '/:partitionId'} component={PartitionViewer}/>
         <Route path={'/login'} component={Login}/>
       </Router>
