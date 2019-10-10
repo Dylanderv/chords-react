@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { useReactRouter } from '../../hooks/useReactRouter';
 import { StaticContext, RouteComponentProps } from 'react-router';
 import ChordViewer from '../chords-viewer/ChordViewer';
-import { Tooltip, withStyles, Theme, Fab, createStyles, Typography } from '@material-ui/core';
+import { Tooltip, withStyles, Theme, Fab, createStyles, Typography, Grid, List, ListItem } from '@material-ui/core';
 import { authContext } from '../../contexts/AuthContext';
 import { PARTITION_EDITOR_BASE_ROUTE } from '../../utils/routerUtils';
 import { makeStyles } from '@material-ui/styles';
@@ -75,28 +75,23 @@ const PartitionViewer: React.FC = () => {
   
   return (
     <div>
-        {loading === true && <div>Loading...</div>}
-        {loading === false && error === undefined && data !== undefined && (
-        <div>
+      {loading === true && <div>Loading...</div>}
+      {loading === false && error === undefined && data !== undefined && (
+      <Grid container direction="column" alignItems="center" style={{ padding: 15 }} spacing={1}>
+        <Grid item>
           <Typography variant="h3" gutterBottom>{data.partition.name}</Typography>
-          {data.partition.chords.map(chord => 
-          <div key={chord.id}>
-            <NoBackgroundTooltip placement="right-start"
-              title={
-                <ChordViewer key={chord.id} isInPartition={true}
-                  instrumentId={data.partition.instrument.id} instrumentName={data.partition.instrument.name} mainKey={chord.key} suffix={chord.suffix}
-                ></ChordViewer>
-              }
-            >
-              <Typography variant="body1" display="inline" style={{ fontWeight: "bold" }}>{chord.key + chord.suffix}</Typography>
-            </NoBackgroundTooltip>
-            
-          </div>
-          )}
-          {/* <div
-            dangerouslySetInnerHTML={{ __html: test(Marked(data.partition.content), data.partition.chords, data.partition.instrument.id, data.partition.instrument.name) }}
-            >
-          </div> */}
+            {data.partition.chords.map((chord, pos) => 
+              <span key={chord.id}>
+                <TooltipChord 
+                  instrumentName={data.partition.instrument.name} 
+                  instrumentId={data.partition.instrument.id} 
+                  chordKey={chord.key} chordSuffix={chord.suffix}
+                />
+                {data.partition.chords.length - 1 > pos && <span> - </span>}
+              </span>
+            )}
+          </Grid>
+          <Grid item>
           <Markdown
             children={test(Marked(data.partition.content), data.partition.chords, data.partition.instrument.id, data.partition.instrument.name)}
             options={{
@@ -105,16 +100,16 @@ const PartitionViewer: React.FC = () => {
               }
             }}
           />
-          {/* <ReactMarkdown source={data.partition.content}></ReactMarkdown> */}
-          {auth.auth.id !== '0' && auth.auth.id === data.partition.owner.id &&
-            <Fab component={Link} to={PARTITION_EDITOR_BASE_ROUTE + '/' + data.partition.id} color='secondary' className={classes.fab}><EditIcon/></Fab>
-          }
-        </div>
-        )}
-        {error !== undefined && (
-          <div>Error, the backend moved to the dark side.</div>
-        )}
-      </div>
+        </Grid>
+        {auth.auth.id !== '0' && auth.auth.id === data.partition.owner.id &&
+          <Fab component={Link} to={PARTITION_EDITOR_BASE_ROUTE + '/' + data.partition.id} color='secondary' className={classes.fab}><EditIcon/></Fab>
+        }
+      </Grid>
+      )}
+      {error !== undefined && (
+        <div>Error, the backend moved to the dark side.</div>
+      )}
+    </div>
   )
 }
 
