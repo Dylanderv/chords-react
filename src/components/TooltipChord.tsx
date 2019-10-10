@@ -12,7 +12,7 @@ type TooltipChordProps = { chordKey: string, chordSuffix: string, instrumentId: 
 
 const TooltipChord: React.FC<TooltipChordProps> = ({ chordKey, chordSuffix, instrumentId, instrumentName }) => {
   return (
-  <NoBackgroundTooltip placement="right-start" style={{ display: "inline" }}
+  <NoBackgroundTooltip disableFocusListener disableTouchListener placement="right-start" style={{ display: "inline" }}
     title={
       <ChordViewer isInPartition={true}
         instrumentId={instrumentId} instrumentName={instrumentName} mainKey={chordKey} suffix={chordSuffix}
