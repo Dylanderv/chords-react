@@ -136,10 +136,14 @@ const PartitionEditor: React.FC = () => {
               <TextField error={inputError} defaultValue={data.partition.name} onChange={handleInput} label="Nom de partition"></TextField>
             </Grid>
             <Grid item>
+              <Typography variant="caption" style={{ fontStyle: 'italic' }}>
+                Pour ajouter des accords à la partition, allez dans l'onglet {data.partition.instrument.name} de la page 'chord' puis cliquez sur le bouton 'Add To partition'
+              </Typography>
+            </Grid>
+            <Grid item>
               <List>
                 {data.partition.chords.map(chord => 
                   <div key={chord.id}>
-                    {/* Ça serait cool si ça pouvait mettre en barré l'accord et qu'il s'enlève que si on enregistre */}
                     <ListItem>
                       <ListItemText primaryTypographyProps={toDeleteChord.findIndex(id => id === chord.id) !== -1 ? { style: {textDecoration: "line-through"} } : {}}
                         primary={chord.key + chord.suffix}
@@ -161,7 +165,11 @@ const PartitionEditor: React.FC = () => {
               </List>
             </Grid>
             <Grid item>
-              {/* <TextField defaultValue={data.partition.content} multiline onChange={handleContentChange}></TextField> */}
+              <Typography variant="caption" style={{ fontStyle: 'italic' }}>
+                Cet éditeur support le <a target="_blank" href="https://fr.wikipedia.org/wiki/Markdown">Markdown</a>
+              </Typography>
+            </Grid>
+            <Grid item>
               <ControlledEditor
                 language="markdown"
                 theme="light"
