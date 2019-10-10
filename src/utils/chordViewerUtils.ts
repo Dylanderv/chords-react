@@ -115,9 +115,12 @@ export function getGuitarUkuleleSvg(chord, instrumentName: string, theme: 'light
   let selector = document.createElement('svg');
   let data;
     if (chord !== undefined && chord.position && chord.position.length > 0) {
+      let numberString = instrumentName === 'guitar' ? 6 : 4;
+      let chordList = chord.position[0].frets.map((fret, index) => fret === -1 ? [numberString - index, 'x'] : [numberString - index, fret]);
+
       data = {
         name: chord.key,
-        chords: chord.position[0].frets.map((fret, index) => fret === -1 ? [index+1, 'x'] : [index+1, fret]),
+        chords: chordList,
         finger: chord.position[0].fingers,
         baseFret: chord.position[0].baseFret,
         barres: chord.position[0].barres!.map(barre => barreInterpretor(chord.position[0].frets, barre, instrumentName === 'guitar' ? 6 : 4))
