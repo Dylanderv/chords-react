@@ -90,7 +90,7 @@ const Login: React.FC = () => {
               <TextField value={usernameInput} onChange={(ev) => setUsernameInput(ev.target.value)} label="Nom de compte"></TextField>
             </Grid>
             <Grid item xs={12}>
-              <TextField value={passwordInput} onChange={(ev) => setPasswordInput(ev.target.value)} label="Mot de passe"></TextField>
+              <TextField type="password" value={passwordInput} onChange={(ev) => setPasswordInput(ev.target.value)} label="Mot de passe"></TextField>
             </Grid>
             <Grid item xs={12}>
               <Button onClick={handleLoginButtonClick}>Login</Button>

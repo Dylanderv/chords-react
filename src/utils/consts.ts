@@ -5,5 +5,5 @@ export const DEFAULT_USER_AUTH: UserAuth = {id: '0', username: '', expire: new D
 
 export const DEFAULT_NOTIFICATION: Notification = {message: undefined, type: 'info'};
 
-export const ENDPOINT = 'http://localhost:3334/';
+export const ENDPOINT = 'https://chord-server.herokuapp.com/';
 
