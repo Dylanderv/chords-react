@@ -11,7 +11,8 @@ import { makeStyles } from '@material-ui/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import Marked from 'marked';
-import ReactDOMServer from 'react-dom/server';
+import Markdown from 'markdown-to-jsx';
+import TooltipChord from '../TooltipChord';
 
 
 function partitionQueryGetter(partitionId: string) {
@@ -92,10 +93,18 @@ const PartitionViewer: React.FC = () => {
             
           </div>
           )}
-          <div
-            dangerouslySetInnerHTML={{ __html: displayContent(Marked(data.partition.content), data.partition.chords, data.partition.instrument.id, data.partition.instrument.name) }}
-          >
-          </div>
+          {/* <div
+            dangerouslySetInnerHTML={{ __html: test(Marked(data.partition.content), data.partition.chords, data.partition.instrument.id, data.partition.instrument.name) }}
+            >
+          </div> */}
+          <Markdown
+            children={test(Marked(data.partition.content), data.partition.chords, data.partition.instrument.id, data.partition.instrument.name)}
+            options={{
+              overrides: {
+                TooltipChord
+              }
+            }}
+          />
           {/* <ReactMarkdown source={data.partition.content}></ReactMarkdown> */}
           {auth.auth.id !== '0' && auth.auth.id === data.partition.owner.id &&
             <Fab component={Link} to={PARTITION_EDITOR_BASE_ROUTE + '/' + data.partition.id} color='secondary' className={classes.fab}><EditIcon/></Fab>
@@ -109,9 +118,10 @@ const PartitionViewer: React.FC = () => {
   )
 }
 
-// Voir ça https://stackoverflow.com/questions/53252212/how-do-i-replace-some-text-template-with-a-custom-jsx-component-in-reactjs
+// TODO: Faire la transformation en Markdown coté serveur
 
-function displayContent(content: string, chordList: {id: string, key: string, suffix: string}[], instrumentId: string, instrumentName: string) {
+function test(content: string, chordList: {id: string, key: string, suffix: string}[], instrumentId: string, instrumentName: string) {
+  // console.log('jsx', parser(content));
   let contentList = [content]
   console.log(content);
   chordList.forEach(chord => contentList = occurencesSplitter(contentList, chord.key + chord.suffix));
@@ -121,21 +131,13 @@ function displayContent(content: string, chordList: {id: string, key: string, su
     let chord = chordList.find(chord => (chord.key + chord.suffix) === contentElem);
     if (chord !== undefined) {
       finalContentList.push(
-        <NoBackgroundTooltip key={pos} placement="right-start" style={{ display: "inline" }}
-          title={
-            <ChordViewer key={chord.id} isInPartition={true}
-              instrumentId={instrumentId} instrumentName={instrumentName} mainKey={chord.key} suffix={chord.suffix}
-            ></ChordViewer>
-          }
-        >
-          <Typography variant="inherit" display="inline" style={{ fontWeight: "bold" }}>{chord.key + chord.suffix}</Typography>
-        </NoBackgroundTooltip>
+        `<TooltipChord instrumentName="${instrumentName}" instrumentId="${instrumentId}" chordKey="${chord.key}" chordSuffix="${chord.suffix}"/>`
       )
     } else {
       finalContentList.push(contentElem);
     }
   })
-  console.log(finalContentList.join(''));
+  console.log('lautre', finalContentList.join(''));
   return finalContentList.join('');
 }
 
