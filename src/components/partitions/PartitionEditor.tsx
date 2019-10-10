@@ -3,14 +3,32 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { useReactRouter } from '../../hooks/useReactRouter';
 import { RouteComponentProps, StaticContext } from 'react-router';
-import { TextField, Button, IconButton, Grid, Typography, ListItem, ListItemText, ListItemSecondaryAction, List } from '@material-ui/core';
+import { TextField, Button, IconButton, Grid, Typography, ListItem, ListItemText, ListItemSecondaryAction, List, Theme } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import { PartitionInput } from '../chords-viewer/AddToPartitionButton';
 import { notificationContext } from '../../contexts/NotificationContext';
 import { authContext } from '../../contexts/AuthContext';
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
-import { PARTITION_BASE_ROUTE } from '../../utils/routerUtils';
+import { PARTITION_BASE_ROUTE, PARTITION_LIST_BASE_ROUTE } from '../../utils/routerUtils';
 import { ControlledEditor } from "@monaco-editor/react";
+import { makeStyles } from '@material-ui/styles';
+import { green, amber, red } from '@material-ui/core/colors';
+import ResponsiveDialog from '../ResponsiveDialog';
+
+const useStyles1 = makeStyles((theme: Theme) => ({
+  success: {
+    backgroundColor: green[600],
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark,
+  },
+  info: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  warning: {
+    backgroundColor: amber[700],
+  },
+}))
 
 const PARTITION_EDITOR_QUERY = (partitionId: string) =>  gql`
 {
@@ -52,6 +70,12 @@ const MODIFY_PARTITION = gql`
   }
 `;
 
+const DELETE_PARTITION = gql`
+ mutation DeletePartition($id: ID!) {
+   deletePartition(id: $id)
+ }
+`
+
 type TParams = { partitionId: string }
 
 const PartitionEditor: React.FC = () => {
@@ -62,8 +86,12 @@ const PartitionEditor: React.FC = () => {
   const [partitionContent, setPartitionContent] = useState('');
   const [ toDeleteChord, setToDeleteChord ] = useState<string[]>([]);
   const [ modifyPartition, { loading: mutationLoading, error: mutationError } ] = useMutation(MODIFY_PARTITION);
+  const [ deletePartition, { loading: deleteMutationLoading, error: deleteMutationError } ] = useMutation(DELETE_PARTITION);
   const notificationHandler = useContext(notificationContext);
   const auth = useContext(authContext);
+  const [openDialog, setOpenDialog] = useState(false);
+  const classes = useStyles1();
+
 
 
   const handleInput = (ev) => {
@@ -121,6 +149,32 @@ const PartitionEditor: React.FC = () => {
   const handleClickRestore = (chordId: string) => {
     setToDeleteChord(toDeleteChord.filter(id => id !== chordId));
   }
+
+  const handleClickButtonDelete = () => {
+    setOpenDialog(true);
+  }
+
+  const handleAcceptDelete = async () => {
+    console.log('accepted')
+    let res;
+    try {
+      res = await deletePartition({ variables: {id: match.params.partitionId }});
+      console.log(res);
+      if (res.data !== null) {
+        notificationHandler.showNotification("La partition a bien supprimée", 'success');
+        history.replace(PARTITION_LIST_BASE_ROUTE);
+      }
+    } catch (err) {
+      console.log('err', err)
+      notificationHandler.showNotification("Erreur lors de la modification de la partition", 'error')
+    }
+  }
+
+  const closeDialog = () => {
+    setOpenDialog(false);
+  }
+
+  
 
   return (
     <div>
@@ -181,8 +235,21 @@ const PartitionEditor: React.FC = () => {
               />
             </Grid>
             <Grid item>
-              <Button onClick={() => handleClickButton()}>Enregister les modifications</Button>
+              <Button variant="outlined" onClick={() => handleClickButton()}>Enregister les modifications</Button>
             </Grid>
+            <Grid item>
+              <Button style={{ backgroundColor: red[500] }} onClick={() => handleClickButtonDelete()}>Supprimer la partition</Button>
+            </Grid>
+            <ResponsiveDialog
+              open={openDialog}
+              title="Suppression de la partition"
+              content="Confirmez vous la suppression de la partition ?"
+              buttonAccept="Oui"
+              buttonRefuse= "Non"
+              handleAccept={handleAcceptDelete}
+              handleRefuse={closeDialog}
+              handleClose={closeDialog}
+            />
           </Grid>
         )}
         {auth.auth.id !== '0' && loading === false && error === undefined && auth.auth.id !== data.partition.owner.id && 
