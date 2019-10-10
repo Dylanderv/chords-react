@@ -4,7 +4,7 @@ import { Grid, TextField, Button, Paper, FormControl, createStyles, Theme, MenuI
 import { makeStyles } from '@material-ui/styles';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { PartitionInput } from '../chords-viewer/AddToPartitionButton';
+import { PartitionInput, Visibility } from '../chords-viewer/AddToPartitionButton';
 import { notificationContext } from '../../contexts/NotificationContext';
 import { useReactRouter } from '../../hooks/useReactRouter';
 import { PARTITION_LIST_BASE_ROUTE } from '../../utils/routerUtils';
@@ -42,7 +42,9 @@ export const NewPartitionEditor: React.FC = () => {
   const [partitionName, setPartitionName] = useState('');
   const [inputError, setInputError] = useState(false);
   const [instrumentSelected, setInstrumentSelected] = useState('');
-  const [selectError, setSelectError] = useState(false);
+  const [selectInstrumentError, setSelectInstrumentError] = useState(false);
+  const [selectVisibilityError, setSelectVisibilityError] = useState(false);
+  const [visibilitySelected, setVisibilitySelected] = useState<Visibility>(Visibility.PUBLIC);
   const classes = useStyles();
   const { data, loading, error } = useQuery(INSTRUMENT_LIST_QUERY);
   const [ createPartition, { loading: mutationLoading, error: mutationError } ] = useMutation(NEW_PARTITION_MUTATION);
@@ -57,8 +59,13 @@ export const NewPartitionEditor: React.FC = () => {
   }
 
   const handleSelectChange = (ev) => {
-    if (selectError) setSelectError(false);
+    if (selectInstrumentError) setSelectInstrumentError(false);
     setInstrumentSelected(ev.target.value)
+  }
+
+  const handleSelectVisibilityChange = (ev) => {
+    if (selectVisibilityError) setSelectVisibilityError(false);
+    setVisibilitySelected(ev.target.value)
   }
 
   const handleCreatePartitionClick = async () => {
@@ -68,7 +75,8 @@ export const NewPartitionEditor: React.FC = () => {
         instrumentId: instrumentSelected,
         name: partitionName,
         ownerId: auth.auth.id,
-        content: ''
+        content: '',
+        visibility: visibilitySelected
      }
      let res;
      try {
@@ -88,7 +96,7 @@ export const NewPartitionEditor: React.FC = () => {
     } else {
       // Notification / Input en rouge
       if (instrumentSelected === '') {
-        setSelectError(true);
+        setSelectInstrumentError(true);
       }
       if (partitionName === '') {
         setInputError(true);
@@ -115,10 +123,18 @@ export const NewPartitionEditor: React.FC = () => {
                 </Grid>
                 <FormControl className={classes.formControl}>
                   <InputLabel>Instrument</InputLabel>
-                  <Select error={selectError} value={instrumentSelected} onChange={(ev) => handleSelectChange(ev)}>
+                  <Select error={selectInstrumentError} value={instrumentSelected} onChange={(ev) => handleSelectChange(ev)}>
                     {data.instruments.map(instrument => <MenuItem key={instrument.id} value={instrument.id}>{instrument.name}</MenuItem>)}
                   </Select>
                 </FormControl>
+                <FormControl className={classes.formControl}>
+                  <InputLabel>Visibilité</InputLabel>
+                  <Select error={selectVisibilityError} value={visibilitySelected} onChange={(ev) => handleSelectVisibilityChange(ev)}>
+                    <MenuItem key={Visibility.PUBLIC} value={Visibility.PUBLIC}>{Visibility.PUBLIC}</MenuItem>
+                    <MenuItem key={Visibility.PRIVATE} value={Visibility.PRIVATE}>{Visibility.PRIVATE}</MenuItem>
+                  </Select>
+                </FormControl>
+
 
                 <Grid item xs={12}>
                   <Button onClick={() => handleCreatePartitionClick()}>Créer la partition</Button>

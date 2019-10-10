@@ -122,7 +122,8 @@ const PartitionEditor: React.FC = () => {
       content: partitionContent,
       instrumentId: data.partition.instrument.id,
       name: partitionName,
-      ownerId: data.partition.owner.id
+      ownerId: data.partition.owner.id,
+      visibility: data.partition.visibility
     }
     let res;
     try {

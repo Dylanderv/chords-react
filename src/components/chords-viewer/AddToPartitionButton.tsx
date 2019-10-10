@@ -21,11 +21,16 @@ const addToPartitionButtonQuery = (userId, instrumentId) => gql`
       id
     }
     content
+    visibility
   }
 }
 `
 
-export type PartitionInput = { name: string, chords: string[], ownerId: string, instrumentId: string, content: string };
+export enum Visibility {
+  PUBLIC = 'PUBLIC',
+  PRIVATE = 'PRIVATE'
+}
+export type PartitionInput = { name: string, chords: string[], ownerId: string, instrumentId: string, content: string, visibility: Visibility };
 
 // const addToPartitionMutation = (partitionId: string, partitionInput: PartitionInput) => gql`
 // {
@@ -73,7 +78,8 @@ const AddToPartitionButton: React.FC<addToPartitionButtonProps> = ({ userId, cho
       instrumentId: partition.instrument.id,
       name: partition.name,
       ownerId: userId,
-      content: partition.content
+      content: partition.content,
+      visibility: partition.visibility
     }
     let res;
     try {
