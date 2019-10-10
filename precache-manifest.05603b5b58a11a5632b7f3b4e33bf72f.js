@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "08e7f60cb2467b4d1ca18ee77da4f4b9",
+    "revision": "1b76cd2514759c7f6e1a035bfd35cec8",
     "url": "/chords-react/index.html"
   },
   {
-    "revision": "1dde00a290ece76c6bc1",
+    "revision": "99e12b94f0d91f3f0479",
     "url": "/chords-react/static/css/2.7fcc339a.chunk.css"
   },
   {
-    "revision": "83d1960d7f722594d434",
+    "revision": "920e4e430398d0808ea8",
     "url": "/chords-react/static/css/main.19393e92.chunk.css"
   },
   {
-    "revision": "1dde00a290ece76c6bc1",
-    "url": "/chords-react/static/js/2.67b66edf.chunk.js"
+    "revision": "99e12b94f0d91f3f0479",
+    "url": "/chords-react/static/js/2.37ae7c46.chunk.js"
   },
   {
-    "revision": "83d1960d7f722594d434",
-    "url": "/chords-react/static/js/main.b3272177.chunk.js"
+    "revision": "920e4e430398d0808ea8",
+    "url": "/chords-react/static/js/main.828f1703.chunk.js"
   },
   {
     "revision": "3c897719447d62cb3126",
