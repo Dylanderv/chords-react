@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1b76cd2514759c7f6e1a035bfd35cec8",
+    "revision": "973c824733e99a3d2e7dbbb5e2b9c6eb",
     "url": "/chords-react/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/chords-react/static/css/2.7fcc339a.chunk.css"
   },
   {
-    "revision": "920e4e430398d0808ea8",
+    "revision": "5aef7e3b3e1ec7b1daef",
     "url": "/chords-react/static/css/main.19393e92.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/chords-react/static/js/2.37ae7c46.chunk.js"
   },
   {
-    "revision": "920e4e430398d0808ea8",
-    "url": "/chords-react/static/js/main.828f1703.chunk.js"
+    "revision": "5aef7e3b3e1ec7b1daef",
+    "url": "/chords-react/static/js/main.70d6d8c8.chunk.js"
   },
   {
     "revision": "3c897719447d62cb3126",
