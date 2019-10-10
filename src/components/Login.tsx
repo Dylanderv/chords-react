@@ -5,6 +5,7 @@ import { authContext, IAuthContextInterface } from '../contexts/AuthContext';
 import { UserAuth } from '../model/UserAuth';
 import { useReactRouter } from '../hooks/useReactRouter';
 import { notificationContext, INotificationContextInterface } from '../contexts/NotificationContext';
+import { BASE_URL } from '../utils/routerUtils';
 
 const ERROR_400_AUTH = 'Requête invalide'
 const ERROR_401_AUTH = 'Nom de compte ou mot de passe incorrect'
@@ -31,7 +32,7 @@ const Login: React.FC = () => {
       notificationHandler.showNotification('Vous êtes bien authentifié', 'success');
       const { id, username }: UserAuth = userData;
       auth.setAuthStatus({ id, username });
-      history.replace('/');
+      history.replace(BASE_URL);
     } catch (err) {
       if (err.code === 400) {
         // Requête invalide

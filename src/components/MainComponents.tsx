@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, useState } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+import { HashRouter as Router, Route, Link } from "react-router-dom"
 import { CHORD_VIEWER_BASE_ROUTE, PARTITION_LIST_BASE_ROUTE, PARTITION_EDITOR_BASE_ROUTE, PARTITION_BASE_ROUTE } from '../utils/routerUtils';
 import InstrumentSelector from './selector/InstrumentSelector';
 import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Theme, createStyles, ButtonGroup, Snackbar, Drawer, ListItem, List, ListItemIcon, ListItemText } from '@material-ui/core';
