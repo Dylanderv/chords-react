@@ -3,9 +3,9 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { useReactRouter } from '../../hooks/useReactRouter';
 import { RouteComponentProps, StaticContext } from 'react-router';
-import { TextField, Button, IconButton, Grid, Typography, ListItem, ListItemText, ListItemSecondaryAction, List, Theme } from '@material-ui/core';
+import { TextField, Button, IconButton, Grid, Typography, ListItem, ListItemText, ListItemSecondaryAction, List, Theme, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
-import { PartitionInput } from '../chords-viewer/AddToPartitionButton';
+import { PartitionInput, Visibility } from '../chords-viewer/AddToPartitionButton';
 import { notificationContext } from '../../contexts/NotificationContext';
 import { authContext } from '../../contexts/AuthContext';
 import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
@@ -27,6 +27,10 @@ const useStyles1 = makeStyles((theme: Theme) => ({
   },
   warning: {
     backgroundColor: amber[700],
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
   },
 }))
 
@@ -87,6 +91,7 @@ const PartitionEditor: React.FC = () => {
   const [ toDeleteChord, setToDeleteChord ] = useState<string[]>([]);
   const [ modifyPartition, { loading: mutationLoading, error: mutationError } ] = useMutation(MODIFY_PARTITION);
   const [ deletePartition, { loading: deleteMutationLoading, error: deleteMutationError } ] = useMutation(DELETE_PARTITION);
+  const [visibilitySelected, setVisibilitySelected] = useState<Visibility>(Visibility.PUBLIC);
   const notificationHandler = useContext(notificationContext);
   const auth = useContext(authContext);
   const [openDialog, setOpenDialog] = useState(false);
@@ -105,8 +110,9 @@ const PartitionEditor: React.FC = () => {
 
   useEffect(() => {
     if (data === undefined) return
-    setPartitionName(data.partition.name)
-    setPartitionContent(data.partition.content)
+    setPartitionName(data.partition.name);
+    setPartitionContent(data.partition.content);
+    setVisibilitySelected(data.partition.visibility);
   }, [data])
 
   const handleContentChange = (ev, value) => {
@@ -123,7 +129,7 @@ const PartitionEditor: React.FC = () => {
       instrumentId: data.partition.instrument.id,
       name: partitionName,
       ownerId: data.partition.owner.id,
-      visibility: data.partition.visibility
+      visibility: visibilitySelected
     }
     let res;
     try {
@@ -154,6 +160,11 @@ const PartitionEditor: React.FC = () => {
   const handleClickButtonDelete = () => {
     setOpenDialog(true);
   }
+
+  const handleSelectVisibilityChange = (ev) => {
+    setVisibilitySelected(ev.target.value)
+  }
+
 
   const handleAcceptDelete = async () => {
     console.log('accepted')
@@ -234,6 +245,15 @@ const PartitionEditor: React.FC = () => {
                 width="50vw"
                 onChange={handleContentChange}
               />
+            </Grid>
+            <Grid item>
+              <FormControl className={classes.formControl}>
+                <InputLabel>Visibilité</InputLabel>
+                <Select value={visibilitySelected} onChange={(ev) => handleSelectVisibilityChange(ev)}>
+                  <MenuItem key={Visibility.PUBLIC} value={Visibility.PUBLIC}>{Visibility.PUBLIC}</MenuItem>
+                  <MenuItem key={Visibility.PRIVATE} value={Visibility.PRIVATE}>{Visibility.PRIVATE}</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item>
               <Button variant="outlined" onClick={() => handleClickButton()}>Enregister les modifications</Button>
