@@ -11,7 +11,6 @@ const NoBackgroundTooltip = withStyles((theme: Theme) => ({
 type TooltipChordProps = { chordKey: string, chordSuffix: string, instrumentId: string, instrumentName: string }
 
 const TooltipChord: React.FC<TooltipChordProps> = ({ chordKey, chordSuffix, instrumentId, instrumentName }) => {
-  console.log(chordKey, chordSuffix, instrumentName, instrumentId);
   return (
   <NoBackgroundTooltip placement="right-start" style={{ display: "inline" }}
     title={

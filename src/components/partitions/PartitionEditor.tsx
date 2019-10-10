@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { useReactRouter } from '../../hooks/useReactRouter';
@@ -89,8 +89,8 @@ const PartitionEditor: React.FC = () => {
   const [inputError, setInputError] = useState(false);
   const [partitionContent, setPartitionContent] = useState('');
   const [ toDeleteChord, setToDeleteChord ] = useState<string[]>([]);
-  const [ modifyPartition, { loading: mutationLoading, error: mutationError } ] = useMutation(MODIFY_PARTITION);
-  const [ deletePartition, { loading: deleteMutationLoading, error: deleteMutationError } ] = useMutation(DELETE_PARTITION);
+  const [ modifyPartition] = useMutation(MODIFY_PARTITION);
+  const [ deletePartition] = useMutation(DELETE_PARTITION);
   const [visibilitySelected, setVisibilitySelected] = useState<Visibility>(Visibility.PUBLIC);
   const notificationHandler = useContext(notificationContext);
   const auth = useContext(authContext);
@@ -134,7 +134,6 @@ const PartitionEditor: React.FC = () => {
     let res;
     try {
       res = await modifyPartition({ variables: {id: match.params.partitionId, partitionInput }});
-      console.log(res);
       if (res.data !== null) {
         notificationHandler.showNotification("La partition a bien été modifié", 'success');
         history.replace(PARTITION_BASE_ROUTE + '/' + data.partition.id);
@@ -167,11 +166,9 @@ const PartitionEditor: React.FC = () => {
 
 
   const handleAcceptDelete = async () => {
-    console.log('accepted')
     let res;
     try {
       res = await deletePartition({ variables: {id: match.params.partitionId }});
-      console.log(res);
       if (res.data !== null) {
         notificationHandler.showNotification("La partition a bien supprimée", 'success');
         history.replace(PARTITION_LIST_BASE_ROUTE);
@@ -232,7 +229,7 @@ const PartitionEditor: React.FC = () => {
             </Grid>
             <Grid item>
               <Typography variant="caption" style={{ fontStyle: 'italic' }}>
-                Cet éditeur support le <a target="_blank" href="https://fr.wikipedia.org/wiki/Markdown">Markdown</a>
+                Cet éditeur support le <a target="_blank" rel="noopener noreferrer" href="https://fr.wikipedia.org/wiki/Markdown">Markdown</a>
               </Typography>
             </Grid>
             <Grid item>

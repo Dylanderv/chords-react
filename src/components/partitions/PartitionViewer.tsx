@@ -3,8 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { useReactRouter } from '../../hooks/useReactRouter';
 import { StaticContext, RouteComponentProps } from 'react-router';
-import ChordViewer from '../chords-viewer/ChordViewer';
-import { Tooltip, withStyles, Theme, Fab, createStyles, Typography, Grid, List, ListItem } from '@material-ui/core';
+import { Theme, Fab, createStyles, Typography, Grid } from '@material-ui/core';
 import { authContext } from '../../contexts/AuthContext';
 import { PARTITION_EDITOR_BASE_ROUTE } from '../../utils/routerUtils';
 import { makeStyles } from '@material-ui/styles';
@@ -57,12 +56,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const NoBackgroundTooltip = withStyles((theme: Theme) => ({
-  tooltip: {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-  },
-}))(Tooltip);
-
 const PartitionViewer: React.FC = () => {
   const { match } = useReactRouter() as RouteComponentProps<TParams, StaticContext, any>
   const { data, loading, error } = useQuery(partitionQueryGetter(match.params.partitionId));
@@ -93,7 +86,7 @@ const PartitionViewer: React.FC = () => {
           </Grid>
           <Grid item>
           <Markdown
-            children={test(Marked(data.partition.content), data.partition.chords, data.partition.instrument.id, data.partition.instrument.name)}
+            children={getJsxFromContentWithTooltip(Marked(data.partition.content), data.partition.chords, data.partition.instrument.id, data.partition.instrument.name)}
             options={{
               overrides: {
                 TooltipChord
@@ -115,12 +108,9 @@ const PartitionViewer: React.FC = () => {
 
 // TODO: Faire la transformation en Markdown coté serveur
 
-function test(content: string, chordList: {id: string, key: string, suffix: string}[], instrumentId: string, instrumentName: string) {
-  // console.log('jsx', parser(content));
+function getJsxFromContentWithTooltip(content: string, chordList: {id: string, key: string, suffix: string}[], instrumentId: string, instrumentName: string) {
   let contentList = [content]
-  console.log(content);
   chordList.forEach(chord => contentList = occurencesSplitter(contentList, chord.key + chord.suffix));
-  console.log(contentList);
   let finalContentList: any[] = [];
   contentList.forEach((contentElem, pos) => {
     let chord = chordList.find(chord => (chord.key + chord.suffix) === contentElem);
@@ -132,7 +122,6 @@ function test(content: string, chordList: {id: string, key: string, suffix: stri
       finalContentList.push(contentElem);
     }
   })
-  console.log('lautre', finalContentList.join(''));
   return finalContentList.join('');
 }
 

@@ -47,7 +47,7 @@ export const NewPartitionEditor: React.FC = () => {
   const [visibilitySelected, setVisibilitySelected] = useState<Visibility>(Visibility.PUBLIC);
   const classes = useStyles();
   const { data, loading, error } = useQuery(INSTRUMENT_LIST_QUERY);
-  const [ createPartition, { loading: mutationLoading, error: mutationError } ] = useMutation(NEW_PARTITION_MUTATION);
+  const [ createPartition ] = useMutation(NEW_PARTITION_MUTATION);
 
   const handleInput = (ev) => {
     if (ev.target.value === '' ) {
@@ -86,9 +86,7 @@ export const NewPartitionEditor: React.FC = () => {
        // Notification
        notificationHandler.showNotification('Erreur lors de la création de la partition', 'error')
      }
-     console.log(res.data.createPartition.id);
      if (res.data.createPartition.id) {
-       console.log(res.data.createPartition.id);
        // Redirection + Notification
        history.replace(PARTITION_LIST_BASE_ROUTE);
        notificationHandler.showNotification('Partition créée', 'success')
