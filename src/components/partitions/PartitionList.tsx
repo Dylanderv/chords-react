@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const PartitionList: React.FC = () => {
-  const { data, error, loading } = useQuery<queryPartition>(PARTITIONS_QUERY);
+  const { data, error, loading } = useQuery<queryPartition>(PARTITIONS_QUERY, {fetchPolicy: 'cache-and-network'});
   const classes = useStyles();
   const { history } = useReactRouter();
   const auth = useContext(authContext);
@@ -60,21 +60,21 @@ export const PartitionList: React.FC = () => {
 
   return (
     <div>
-        {loading === true && <div>Loading...</div>}
-        {loading === false && error === undefined && data !== undefined && (
-        <div>
-          <Grid container spacing={1} style={{ padding: 10 }}>
-            {data.partitions.map(partition => <Grid key={partition.id} item onClick={() => handleClickPartition(partition.id)}>{getCardFromPartition(partition)}</Grid>)}
-          </Grid>
-          {auth.auth.id !== '0' &&
-            <Fab component={Link} to={PARTITION_EDITOR_BASE_ROUTE + '/new'} color='secondary' className={classes.fab}><AddIcon/></Fab>
-          }
-        </div>
-        )}
-        {error !== undefined && (
-          <div>Error, the backend moved to the dark side.</div>
-        )}
+      {loading === true && <div>Loading...</div>}
+      {loading === false && error === undefined && data !== undefined && (
+      <div>
+        <Grid container spacing={1} style={{ padding: 10 }}>
+          {data.partitions.map(partition => <Grid key={partition.id} item onClick={() => handleClickPartition(partition.id)}>{getCardFromPartition(partition)}</Grid>)}
+        </Grid>
+        {auth.auth.id !== '0' &&
+          <Fab component={Link} to={PARTITION_EDITOR_BASE_ROUTE + '/new'} color='secondary' className={classes.fab}><AddIcon/></Fab>
+        }
       </div>
+      )}
+      {error !== undefined && (
+        <div>Error, the backend moved to the dark side.</div>
+      )}
+    </div>
   )
 }
 
