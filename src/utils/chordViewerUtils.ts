@@ -142,20 +142,22 @@ export function getGuitarUkuleleSvg(chord, instrumentName: string, theme: 'light
 }
 
 function barreInterpretor(frets: number[], barre: number, chordsNumber: number) {
-  let minFret = chordsNumber;
+  let minFret = chordsNumber - 1;
   let maxFret = 0;
 
-  frets.forEach((fret,index) => {
+  for (let i = chordsNumber - 1; i >= 0; i--) {
+    let fret = frets[i];
     if (fret === barre) {
-      if (index + 1 < minFret) {
-        minFret = index + 1
+      if (i < minFret) {
+        minFret = i
       }
-      if (index + 1 > maxFret) {
-        maxFret = index + 1
+      if (i > maxFret) {
+        maxFret = i
       }
     }
-  })
-  return {fromString: maxFret, toString: minFret, fret: barre}
+  }
+
+  return {fromString: chordsNumber - minFret, toString: chordsNumber - maxFret, fret: barre}
 }
 
 /*
